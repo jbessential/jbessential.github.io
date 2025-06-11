@@ -1,1 +1,160 @@
-
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JBessential | Home</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+    header {
+      background-color: #111;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+      padding: 0;
+      margin: 0;
+    }
+    nav ul li {
+      display: inline;
+    }
+    nav a, input[type="text"] {
+      color: white;
+      text-decoration: none;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid white;
+      padding: 5px;
+    }
+    .slider {
+      overflow: hidden;
+      max-height: 300px;
+    }
+    .slides img {
+      width: 100%;
+      display: none;
+      animation: fade 1s ease-in-out;
+    }
+    .slides img:first-child {
+      display: block;
+    }
+    @keyframes fade {
+      from { opacity: 0.4; }
+      to { opacity: 1; }
+    }
+    .category-grid, .product-grid {
+      display: flex;
+      justify-content: space-around;
+      padding: 20px;
+    }
+    .cat-box, .product {
+      background-color: #222;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      width: 150px;
+    }
+    .cat-box:hover, .product:hover {
+      background-color: #333;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px;
+      background: white;
+      color: black;
+      text-decoration: none;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+    .cod-video {
+      padding: 20px;
+      text-align: center;
+    }
+    .cod-video p {
+      margin-bottom: 10px;
+    }
+    #about, #contact {
+      padding: 20px;
+      background: #111;
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background: #111;
+      color: #888;
+    }
+    .chatbot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #fff;
+      color: black;
+      padding: 10px 15px;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>JBessential</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><input type="text" placeholder="Search products..." /></li>
+      </ul>
+    </nav>
+  </header>  <!-- Slider -->  <section class="slider">
+    <div class="slides">
+      <img src="images/banner1.jpg" alt="Banner 1" />
+      <img src="images/banner2.jpg" alt="Banner 2" />
+      <img src="images/banner3.jpg" alt="Banner 3" />
+    </div>
+  </section>  <!-- Categories -->  <section id="categories">
+    <h2>Shop by Categories</h2>
+    <div class="category-grid">
+      <div class="cat-box">Kitchen</div>
+      <div class="cat-box">Electricity</div>
+      <div class="cat-box">Home Decor</div>
+    </div>
+  </section>  <!-- Products -->  <section id="products">
+    <h2>Featured Products</h2>
+    <div class="product-grid">
+      <div class="product">
+        <img src="images/product1.jpg" alt="Product 1" width="100" />
+        <p>Product Name</p>
+        <p>₹499</p>
+        <a href="https://wa.me/919560948662" class="btn">Order on WhatsApp</a>
+      </div>
+      <!-- More products... -->
+    </div>
+  </section>  <!-- COD + Video -->  <section class="cod-video">
+    <p>✅ Cash on Delivery Available | 📱 UPI Payments Accepted</p>
+    <video autoplay muted loop width="300">
+      <source src="video/intro.mp4" type="video/mp4" />
+    </video>
+  </section>  <!-- About Us -->  <section id="about">
+    <h2>About JBessential</h2>
+    <p>We bring you high-quality home, kitchen, and electric products with fast delivery and trusted service.</p>
+  </section>  <!-- Contact -->  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>📱 WhatsApp: <a href="https://wa.me/919560948662">9560948662</a></p>
+    <p>✉️ Email: support@jbessential.in</p>
+  </section>  <!-- Chatbot (simple static) -->  <div class="chatbot">💬 Chat with us!</div>  <!-- Footer -->  <footer>
+    <p>&copy; 2025 JBessential | All rights reserved.</p>
+  </footer>
+</body>
+</html>
