@@ -1,48 +1,137 @@
-<!-- index.html --><!DOCTYPE html><html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JB Essential - Home</title>
+    <title>JB Essential | Amazon Style</title>
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="icon" type="image/png" href="logo.png">
+</head><body>
+    <!-- Header -->
     <header>
-        <img src="logo.png" alt="JB Essential Logo" style="height: 60px;">
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#products">Products</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header><section id="banner">
-    <h1>Welcome to JB Essential</h1>
-    <p>Everything You Need. Delivered.</p>
+        <div class="navbar">
+            <img src="logo.png" alt="JB Essential" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#cart">Cart 🛒</a></li>
+                </ul>
+            </nav>
+            <input type="text" id="searchInput" placeholder="Search products...">
+        </div>
+    </header><!-- Banner -->
+<section id="home" class="banner">
+    <img src="banner1.jpg" class="slide" style="display: block;">
+    <img src="banner2.jpg" class="slide">
+    <img src="banner3.jpg" class="slide">
 </section>
 
-<section id="products">
-    <h2>Our Top Categories</h2>
-    <div class="category">
+<!-- Categories -->
+<section id="categories">
+    <h2>Top Categories</h2>
+    <div class="category-list">
         <button>Home & Kitchen</button>
         <button>Women</button>
         <button>Kids</button>
         <button>Beauty</button>
         <button>Jewellery</button>
-        <button>Footwear</button>
+        <button>Bags</button>
+        <button>Footwears</button>
         <button>Electronics</button>
-        <button>Sports & Fitness</button>
+        <button>Fitness</button>
     </div>
-
-    <div id="product-list"></div>
 </section>
 
-<footer id="contact">
-    <p>Contact us at: contact.JBessential@gmail.com</p>
-    <p>Follow us: <a href="https://instagram.com/jb__essential" target="_blank">@jb__essential</a></p>
-</footer>
+<!-- Product Section -->
+<section id="products">
+    <h2>Our Products</h2>
+    <div id="productContainer"></div>
+</section>
 
-<script src="script.js"></script>
+<!-- About Section -->
+<section id="about">
+    <h2>About JB Essential</h2>
+    <p>JB Essential is your one-stop online store for affordable and quality home, fashion, and electronics products. We're dedicated to giving you the very best with a focus on customer support, fast delivery, and easy return policy.</p>
+</section>
+
+<!-- Contact Section -->
+<section id="contact">
+    <h2>Contact Us</h2>
+    <p>Email: contact.JBessential@gmail.com</p>
+    <p>Instagram: <a href="https://instagram.com/jb__essential" target="_blank">@jb__essential</a></p>
+</section>
+
+<!-- Cart Section -->
+<section id="cart">
+    <h2>Cart</h2>
+    <div id="cartItems"></div>
+    <p>Total: ₹<span id="totalPrice">0</span></p>
+    <button onclick="checkoutWhatsApp()">Checkout via WhatsApp</button>
+</section>
+
+<!-- Chatbot (Future AI Assistant) -->
+<div id="chatbot">
+    <p>🤖 AI Assistant coming soon...</p>
+</div>
+
+<!-- Scripts -->
+<script>
+    // Banner Auto Slide
+    let index = 0;
+    const slides = document.querySelectorAll(".slide");
+    setInterval(() => {
+        slides.forEach(slide => slide.style.display = "none");
+        index = (index + 1) % slides.length;
+        slides[index].style.display = "block";
+    }, 3000);
+
+    // Products
+    const products = [
+        { name: "Saree Combo", price: 499, image: "product1.jpg", desc: "Silk Designer Saree." },
+        { name: "Kitchen Set", price: 799, image: "product2.jpg", desc: "Non-stick Cookware" },
+        { name: "Wireless Earbuds", price: 1199, image: "product3.jpg", desc: "Bluetooth 5.0" }
+    ];
+
+    const productContainer = document.getElementById("productContainer");
+    const cartItems = [];
+
+    products.forEach((product, i) => {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>${product.desc}</p>
+            <p>₹${product.price}</p>
+            <button onclick="addToCart(${i})">Add to Cart</button>
+        `;
+        productContainer.appendChild(div);
+    });
+
+    function addToCart(i) {
+        cartItems.push(products[i]);
+        updateCart();
+    }
+
+    function updateCart() {
+        const cart = document.getElementById("cartItems");
+        const total = document.getElementById("totalPrice");
+        cart.innerHTML = "";
+        let sum = 0;
+        cartItems.forEach(item => {
+            cart.innerHTML += <p>${item.name} - ₹${item.price}</p>;
+            sum += item.price;
+        });
+        total.textContent = sum;
+    }
+
+    function checkoutWhatsApp() {
+        const message = cartItems.map(item => ${item.name} - ₹${item.price}).join("%0A");
+        const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+        window.open(`https://wa.me/91XXXXXXXXXX?text=Products:%0A${message}%0ATotal: ₹${total}%0AAddress: `);
+    }
+</script>
 
 </body>
 </html>
