@@ -1,114 +1,51 @@
-<!DOCTYPE html><html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JB Essential - Amazon Style</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-    }
-    header {
-      background-color: #232f3e;
-      padding: 10px 20px;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    header img {
-      height: 40px;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      margin: 0;
-      padding: 0;
-    }
-    nav ul li {
-      margin: 0 10px;
-    }
-    nav ul li a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .product-upload, .products-list {
-      max-width: 1000px;
-      margin: 20px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-    }
-    .product-item {
-      border: 1px solid #ddd;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-    }
-    footer {
-      background-color: #232f3e;
-      color: white;
-      text-align: center;
-      padding: 10px;
-      margin-top: 20px;
-    }
-  </style>
-</head>
-<body>
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JB Essential - Online Store</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="logo.png">
+</head><body>
   <header>
-    <img src="logo.png" alt="JB Essential Logo" />
+    <img src="logo.png" alt="JB Essential Logo" class="logo">
+    <h1>JB Essential</h1>
     <nav>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Women</a></li>
-        <li><a href="#">Men</a></li>
-        <li><a href="#">Kids</a></li>
-        <li><a href="#">Beauty</a></li>
-        <li><a href="#">Electronics</a></li>
-        <li><a href="#">Kitchen</a></li>
-        <li><a href="#">Sports</a></li>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
-  </header>  <section class="product-upload">
-    <h2>Add Product</h2>
-    <form id="productForm">
-      <input type="text" placeholder="Product Name" id="productName" required />
-      <input type="text" placeholder="Price" id="productPrice" required />
-      <input type="text" placeholder="Image URL" id="productImage" required />
-      <textarea placeholder="Description" id="productDescription" required></textarea><br><br>
-      <button type="submit">Add Product</button>
-    </form>
-  </section>  <section class="products-list">
-    <h2>Product List</h2>
-    <div id="productContainer"></div>
+  </header>  <section class="banner">
+    <img src="banner1.jpg" alt="Banner 1" class="slide active">
+    <img src="banner2.jpg" alt="Banner 2" class="slide">
+    <img src="banner3.jpg" alt="Banner 3" class="slide">
+  </section>  <section id="categories" class="categories">
+    <h2>Top Categories</h2>
+    <div class="category-list">
+      <div>Home</div>
+      <div>Kitchen</div>
+      <div>Women</div>
+      <div>Kids</div>
+      <div>Beauty</div>
+      <div>Jewellery</div>
+      <div>Bags</div>
+      <div>Footwears</div>
+      <div>Electronics</div>
+      <div>Sports & Fitness</div>
+    </div>
+  </section>  <section id="products" class="product-section">
+    <h2>Top Products</h2>
+    <div id="product-container"></div>
+  </section>  <section id="about" class="about">
+    <h2>About Us</h2>
+    <p>JB Essential ek trusted Indian e-commerce brand hai jo aapko home decor, kitchen items, electronics aur clothing jaise high quality products deliver karta hai. Hum cash on delivery, UPI payment aur 7 din return policy bhi dete hain. Swagat hai aapka!</p>
+  </section>  <section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <p>Email: <a href="mailto:contact.JBessential@gmail.com">contact.JBessential@gmail.com</a></p>
+    <p>Instagram: <a href="https://instagram.com/jb__essential" target="_blank">@jb__essential</a></p>
+    <a href="https://wa.me/919560948662" class="whatsapp-button">Order on WhatsApp</a>
   </section>  <footer>
-    <p>Contact: contact.JBessential@gmail.com | Instagram: <a href="https://instagram.com/jb__essential" style="color: #00aced">@jb__essential</a></p>
-  </footer>  <script>
-    const form = document.getElementById("productForm");
-    const container = document.getElementById("productContainer");
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const name = document.getElementById("productName").value;
-      const price = document.getElementById("productPrice").value;
-      const image = document.getElementById("productImage").value;
-      const description = document.getElementById("productDescription").value;
-
-      const productHTML = `
-        <div class="product-item">
-          <h3>${name}</h3>
-          <img src="${image}" alt="${name}" width="150" />
-          <p><strong>Price:</strong> ₹${price}</p>
-          <p>${description}</p>
-          <a href="https://wa.me/?text=I%20want%20to%20buy:%20${name}%20for%20₹${price}" target="_blank">Buy on WhatsApp</a>
-        </div>
-      `;
-
-      container.innerHTML += productHTML;
-      form.reset();
-    });
-  </script></body>
-</html>
+    <p>&copy; 2025 JB Essential. All rights reserved.</p>
+  </footer>  <script src="script.js"></script></body></html
  
