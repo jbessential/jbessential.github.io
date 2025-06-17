@@ -2,73 +2,113 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JB Essential - E-Commerce</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <title>JB Essential - Amazon Style</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-    body { background: #f4f4f4; color: #333; }
-    header { background: #2c3e50; padding: 1rem; color: white; text-align: center; }
-    nav { display: flex; justify-content: center; gap: 1rem; background: #34495e; padding: 0.5rem; }
-    nav a { color: white; text-decoration: none; font-weight: bold; }
-    .banner { width: 100%; height: 250px; background: url('https://via.placeholder.com/1200x250') no-repeat center center/cover; margin-bottom: 1rem; }
-    .categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; padding: 1rem; }
-    .category { background: white; padding: 1rem; text-align: center; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 1rem; }
-    .product { background: white; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); padding: 1rem; text-align: center; }
-    .product img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; }
-    .whatsapp-btn { background: #25d366; color: white; padding: 0.5rem 1rem; margin-top: 0.5rem; display: inline-block; border-radius: 4px; text-decoration: none; }
-    footer { background: #2c3e50; color: white; text-align: center; padding: 2rem 1rem; margin-top: 2rem; }
-    .about, .contact { padding: 1rem; }
-    @media(max-width: 600px) { nav { flex-direction: column; gap: 0.5rem; } }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+    header {
+      background-color: #232f3e;
+      padding: 10px 20px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header img {
+      height: 40px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li {
+      margin: 0 10px;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .product-upload, .products-list {
+      max-width: 1000px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .product-item {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+    footer {
+      background-color: #232f3e;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>JB Essential</h1>
-    <p>Your trusted online store</p>
-  </header>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#categories">Categories</a>
-    <a href="#about">About Us</a>
-    <a href="#contact">Contact</a>
-  </nav>
-  <div class="banner"></div>
-  <section id="categories" class="categories">
-    <div class="category">Home</div>
-    <div class="category">Kitchen</div>
-    <div class="category">Women</div>
-    <div class="category">Kids</div>
-    <div class="category">Beauty</div>
-    <div class="category">Jewellery</div>
-    <div class="category">Bags</div>
-    <div class="category">Footwears</div>
-    <div class="category">Electronics</div>
-    <div class="category">Sports & Fitness</div>
-  </section>
-  <section class="products">
-    <div class="product">
-      <img src="https://via.placeholder.com/300x200" alt="Product 1" />
-      <h3>Product Name</h3>
-      <p>₹499</p>
-      <a href="https://wa.me/919560948662?text=I'm interested in Product Name - ₹499" class="whatsapp-btn">Order on WhatsApp</a>
-    </div>
-    <!-- Add more products below in same format -->
-  </section>
-  <section id="about" class="about">
-    <h2>About Us</h2>
-    <p>Welcome to JB Essential. We provide quality products at affordable prices. With fast delivery, cash on delivery, and dedicated support — we aim to bring the best to your doorstep.</p>
-  </section>
-  <section id="contact" class="contact">
-    <h2>Contact Us</h2>
-    <p>Email: <a href="mailto:contact.JBessential@gmail.com">contact.JBessential@gmail.com</a></p>
-    <p>Instagram: <a href="https://instagram.com/jb__essential" target="_blank">@jb__essential</a></p>
-    <p>WhatsApp: <a href="https://wa.me/919560948662">9560948662</a></p>
-  </section>
-  <footer>
-    <p>Cash on Delivery Available | UPI Accepted</p>
-    <p>&copy; 2025 JB Essential. All rights reserved.</p>
-  </footer>
-</body>
+    <img src="logo.png" alt="JB Essential Logo" />
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Women</a></li>
+        <li><a href="#">Men</a></li>
+        <li><a href="#">Kids</a></li>
+        <li><a href="#">Beauty</a></li>
+        <li><a href="#">Electronics</a></li>
+        <li><a href="#">Kitchen</a></li>
+        <li><a href="#">Sports</a></li>
+      </ul>
+    </nav>
+  </header>  <section class="product-upload">
+    <h2>Add Product</h2>
+    <form id="productForm">
+      <input type="text" placeholder="Product Name" id="productName" required />
+      <input type="text" placeholder="Price" id="productPrice" required />
+      <input type="text" placeholder="Image URL" id="productImage" required />
+      <textarea placeholder="Description" id="productDescription" required></textarea><br><br>
+      <button type="submit">Add Product</button>
+    </form>
+  </section>  <section class="products-list">
+    <h2>Product List</h2>
+    <div id="productContainer"></div>
+  </section>  <footer>
+    <p>Contact: contact.JBessential@gmail.com | Instagram: <a href="https://instagram.com/jb__essential" style="color: #00aced">@jb__essential</a></p>
+  </footer>  <script>
+    const form = document.getElementById("productForm");
+    const container = document.getElementById("productContainer");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = document.getElementById("productName").value;
+      const price = document.getElementById("productPrice").value;
+      const image = document.getElementById("productImage").value;
+      const description = document.getElementById("productDescription").value;
+
+      const productHTML = `
+        <div class="product-item">
+          <h3>${name}</h3>
+          <img src="${image}" alt="${name}" width="150" />
+          <p><strong>Price:</strong> ₹${price}</p>
+          <p>${description}</p>
+          <a href="https://wa.me/?text=I%20want%20to%20buy:%20${name}%20for%20₹${price}" target="_blank">Buy on WhatsApp</a>
+        </div>
+      `;
+
+      container.innerHTML += productHTML;
+      form.reset();
+    });
+  </script></body>
 </html>
  
