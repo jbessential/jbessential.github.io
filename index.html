@@ -1,178 +1,49 @@
-<!DOCTYPE html><html lang="en">
+<!-- index.html --><!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JB Essential - Amazon Style</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }body {
-  background-color: #f2f2f2;
-}
-
-header {
-  background-color: #232f3e;
-  color: white;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.search-bar input {
-  padding: 10px;
-  width: 250px;
-  border-radius: 5px;
-  border: none;
-}
-
-nav {
-  background-color: #37475a;
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  padding: 10px;
-  flex-wrap: wrap;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  padding: 8px 12px;
-}
-
-.banner {
-  width: 100%;
-  height: 250px;
-  background-image: url('banner1.jpg');
-  background-size: cover;
-  background-position: center;
-  animation: slide 15s infinite;
-}
-
-@keyframes slide {
-  0% { background-image: url('banner1.jpg'); }
-  33% { background-image: url('banner2.jpg'); }
-  66% { background-image: url('banner3.jpg'); }
-  100% { background-image: url('banner1.jpg'); }
-}
-
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 15px;
-  padding: 20px;
-}
-
-.product {
-  background: white;
-  padding: 10px;
-  border-radius: 8px;
-  text-align: center;
-}
-
-.product img {
-  width: 100%;
-  height: 160px;
-  object-fit: contain;
-}
-
-.product h4 {
-  margin: 10px 0 5px;
-}
-
-.product p {
-  color: green;
-}
-
-.product button {
-  padding: 6px 12px;
-  margin-top: 8px;
-  background-color: #ff9900;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-footer {
-  background-color: #232f3e;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-.whatsapp-btn {
-  background: green;
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1000;
-  text-decoration: none;
-}
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JB Essential - Home</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <img src="logo.png" alt="JB Essential" style="height: 40px; vertical-align: middle;"> JB Essential
+    <header>
+        <img src="logo.png" alt="JB Essential Logo" style="height: 60px;">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header><section id="banner">
+    <h1>Welcome to JB Essential</h1>
+    <p>Everything You Need. Delivered.</p>
+</section>
+
+<section id="products">
+    <h2>Our Top Categories</h2>
+    <div class="category">
+        <button>Home & Kitchen</button>
+        <button>Women</button>
+        <button>Kids</button>
+        <button>Beauty</button>
+        <button>Jewellery</button>
+        <button>Footwear</button>
+        <button>Electronics</button>
+        <button>Sports & Fitness</button>
     </div>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search products...">
-    </div>
-    <div>
-      <i class="fas fa-shopping-cart"></i>
-    </div>
-  </header>  <nav>
-    <a href="#">Home</a>
-    <a href="#">Kitchen</a>
-    <a href="#">Women</a>
-    <a href="#">Kids</a>
-    <a href="#">Beauty</a>
-    <a href="#">Jewellery</a>
-    <a href="#">Bags</a>
-    <a href="#">Footwear</a>
-    <a href="#">Electronics</a>
-    <a href="#">Fitness</a>
-    <a href="#">About Us</a>
-  </nav>  <div class="banner"></div>  <section class="products" id="productList">
-    <div class="product">
-      <img src="product1.jpg" alt="Product 1">
-      <h4>Stylish Mixer</h4>
-      <p>₹799</p>
-      <button onclick="orderProduct('Stylish Mixer', 799)">Add to Cart</button>
-    </div>
-    <div class="product">
-      <img src="product2.jpg" alt="Product 2">
-      <h4>Electric Kettle</h4>
-      <p>₹999</p>
-      <button onclick="orderProduct('Electric Kettle', 999)">Add to Cart</button>
-    </div>
-    <!-- Add more products as needed -->
-  </section>  <a class="whatsapp-btn" href="https://wa.me/919560948662" target="_blank">
-    <i class="fab fa-whatsapp"></i> Order on WhatsApp
-  </a>  <footer>
-    <p>© 2025 JB Essential. All rights reserved.</p>
-    <p>Contact us: contact.JBessential@gmail.com</p>
-    <p>Follow us: <a href="https://instagram.com/jb__essential" style="color: lightblue;">Instagram</a></p>
-  </footer>  <script>
-    function orderProduct(name, price) {
-      const msg = Hello, I want to order:\nProduct: ${name}\nPrice: ₹${price};
-      window.open(https://wa.me/919560948662?text=${encodeURIComponent(msg)});
-    }
-  </script></body>
+
+    <div id="product-list"></div>
+</section>
+
+<footer id="contact">
+    <p>Contact us at: contact.JBessential@gmail.com</p>
+    <p>Follow us: <a href="https://instagram.com/jb__essential" target="_blank">@jb__essential</a></p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
 </html>
  
