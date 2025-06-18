@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - JB Essential</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="login-section">
+    <h2>Admin Login</h2>
+    <input type="password" id="admin-password" placeholder="Enter Admin Password">
+    <button onclick="checkPassword()">Login</button>
+  </div>  <div class="container hidden" id="admin-panel">
+    <h2>Product Upload</h2>
+    <input type="text" id="product-name" placeholder="Product Name">
+    <textarea id="product-description" placeholder="Product Description"></textarea>
+    <input type="number" id="product-price" placeholder="Price">
+    <input type="file" id="product-image">
+    <button onclick="uploadProduct()">Upload Product</button>
+  </div>  <script>
+    const correctPassword = "JBessentialadminpanel786";
+
+    function checkPassword() {
+      const input = document.getElementById("admin-password").value;
+      if (input === correctPassword) {
+        document.getElementById("login-section").classList.add("hidden");
+        document.getElementById("admin-panel").classList.remove("hidden");
+      } else {
+        alert("Wrong password");
+      }
+    }
+
+    function uploadProduct() {
+      const name = document.getElementById("product-name").value;
+      const desc = document.getElementById("product-description").value;
+      const price = document.getElementById("product-price").value;
+      const fileInput = document.getElementById("product-image");
+      const file = fileInput.files[0];
+
+      if (!name || !desc || !price || !file) {
+        alert("Please fill all fields");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const product = {
+          name: name,
+          description: desc,
+          price: price,
+          image: e.target.result
+        };
+        localStorage.setItem("product_" + Date.now(), JSON.stringify(product));
+        alert("Product uploaded!");
+      };
+      reader.readAsDataURL(file);
+    }
+  </script></body>
+</html>
