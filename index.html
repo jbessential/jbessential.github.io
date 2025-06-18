@@ -1,165 +1,253 @@
-<!DOCTYPE html><html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JB Essential - Online Shopping</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <style>
-    /* Basic Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }body {
-  background-color: #f2f2f2;
-  color: #333;
-}
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JB Essential - Amazon Style</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }body {
+        background-color: #f2f2f2;
+    }
 
-header {
-  background-color: #232f3e;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #fff;
-}
+    header {
+        background-color: #232f3e;
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+    }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+    .logo {
+        display: flex;
+        align-items: center;
+    }
 
-.logo img {
-  height: 40px;
-}
+    .logo img {
+        height: 40px;
+        margin-right: 10px;
+    }
 
-.nav {
-  display: flex;
-  gap: 15px;
-}
+    .search-bar input {
+        padding: 8px;
+        width: 300px;
+        border-radius: 5px;
+        border: none;
+    }
 
-.nav a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 14px;
-}
+    .cart {
+        position: relative;
+        cursor: pointer;
+    }
 
-.banner {
-  width: 100%;
-  height: 200px;
-  background-color: #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #666;
-}
+    .cart i {
+        font-size: 20px;
+    }
 
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 20px;
-}
+    .cart-count {
+        background: red;
+        color: white;
+        font-size: 12px;
+        border-radius: 50%;
+        padding: 2px 6px;
+        position: absolute;
+        top: -5px;
+        right: -10px;
+    }
 
-.product-card {
-  background-color: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  padding: 10px;
-}
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
 
-.product-card img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-}
+    .product {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
 
-.product-card h3 {
-  font-size: 16px;
-  margin: 10px 0;
-}
+    .product img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
 
-.product-card p {
-  font-size: 14px;
-  color: #555;
-}
+    .product h3 {
+        font-size: 16px;
+        margin: 10px 0;
+    }
 
-.product-card .price {
-  color: green;
-  font-weight: bold;
-  margin: 10px 0;
-}
+    .product p {
+        color: green;
+        margin-bottom: 10px;
+    }
 
-.footer {
-  background-color: #232f3e;
-  color: #fff;
-  text-align: center;
-  padding: 20px;
-}
+    .product button {
+        background: #febd69;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
 
-.contact-info {
-  margin-top: 10px;
-  font-size: 14px;
-}
+    #cartModal {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 100vh;
+        background: white;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        padding: 20px;
+        overflow-y: auto;
+        z-index: 9999;
+    }
 
-  </style>
-</head>
-<body>
-  <header>
-    <div class="logo">
-      <img src="logo.png" alt="JB Essential Logo" />
-      <h1>JB Essential</h1>
+    #cartModal.active {
+        transform: translateX(0);
+    }
+
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+    }
+
+    .cart-item span {
+        font-size: 14px;
+    }
+
+    .checkout {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .checkout button {
+        padding: 10px 20px;
+        background-color: green;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    footer {
+        background: #232f3e;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 20px;
+    }
+</style>
+
+</head><body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="JB Essential">
+            <h2>JB Essential</h2>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search products...">
+        </div>
+        <div class="cart" onclick="toggleCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">0</span>
+        </div>
+    </header><div class="product-grid" id="productGrid">
+    <!-- Products will be injected here by admin uploads -->
+</div>
+
+<div id="cartModal">
+    <h3>Your Cart</h3>
+    <div id="cartItems"></div>
+    <div class="checkout">
+        <p>Total: ₹<span id="cartTotal">0</span></p>
+        <button onclick="checkout()">Checkout via WhatsApp</button>
     </div>
-    <nav class="nav">
-      <a href="#">Home</a>
-      <a href="#products">Products</a>
-      <a href="#contact">Contact</a>
-      <a href="https://instagram.com/jb__essential" target="_blank"><i class="fab fa-instagram"></i></a>
-    </nav>
-  </header>  <section class="banner">
-    Your Banner Here (Upload via Admin Panel)
-  </section>  <section id="products" class="products">
-    <!-- Product cards will be added here dynamically -->
-  </section>  <footer class="footer">
-    <p>&copy; 2025 JB Essential. All rights reserved.</p>
-    <div class="contact-info">
-      <p>Call/WhatsApp: <strong>9560948662</strong></p>
-      <p>Email: contact.JBessential@gmail.com</p>
-    </div>
-  </footer>  <script>
-    // Dummy Products for Now
-    const products = [
-      {
-        name: "Saree Designer",
-        price: "₹499",
-        desc: "Best-selling saree",
-        image: "https://via.placeholder.com/200"
-      },
-      {
-        name: "Kitchen Combo",
-        price: "₹899",
-        desc: "5-in-1 Kitchen tool",
-        image: "https://via.placeholder.com/200"
-      }
+</div>
+
+<footer>
+    <p>📞 Contact: 9560948662 | 📧 Email: contact.JBessential@gmail.com</p>
+    <p>Follow us on Instagram: <a href="https://instagram.com/jb__essential" target="_blank" style="color:#febd69">@jb__essential</a></p>
+    <p>© 2025 JB Essential. All rights reserved.</p>
+</footer>
+
+<script>
+    let cart = [];
+
+    function toggleCart() {
+        document.getElementById("cartModal").classList.toggle("active");
+    }
+
+    function addToCart(name, price) {
+        cart.push({ name, price });
+        updateCart();
+    }
+
+    function updateCart() {
+        const cartItems = document.getElementById("cartItems");
+        const cartTotal = document.getElementById("cartTotal");
+        const cartCount = document.getElementById("cartCount");
+        cartItems.innerHTML = "";
+
+        let total = 0;
+        cart.forEach((item, index) => {
+            cartItems.innerHTML += <div class='cart-item'><span>${item.name}</span><span>₹${item.price}</span></div>;
+            total += parseInt(item.price);
+        });
+
+        cartCount.textContent = cart.length;
+        cartTotal.textContent = total;
+    }
+
+    function checkout() {
+        let message = "Order Details:%0A";
+        cart.forEach(item => {
+            message += 📦 ${item.name} - ₹${item.price}%0A;
+        });
+        let total = cart.reduce((sum, item) => sum + parseInt(item.price), 0);
+        message += Total: ₹${total};
+        window.open(https://wa.me/919560948662?text=${message}, '_blank');
+    }
+
+    // Placeholder product loader (use admin panel to generate this dynamically)
+    const sampleProducts = [
+        { name: "Wireless Earbuds", price: "999", img: "https://via.placeholder.com/200" },
+        { name: "Smart Watch", price: "1299", img: "https://via.placeholder.com/200" },
+        { name: "Kitchen Mixer", price: "2499", img: "https://via.placeholder.com/200" }
     ];
 
-    const productSection = document.getElementById("products");
-    products.forEach((p) => {
-      const div = document.createElement("div");
-      div.className = "product-card";
-      div.innerHTML = `
-        <img src="${p.image}" alt="${p.name}" />
-        <h3>${p.name}</h3>
-        <p>${p.desc}</p>
-        <p class="price">${p.price}</p>
-      `;
-      productSection.appendChild(div);
+    const grid = document.getElementById("productGrid");
+    sampleProducts.forEach(product => {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `
+            <img src="${product.img}" alt="${product.name}" />
+            <h3>${product.name}</h3>
+            <p>₹${product.price}</p>
+            <button onclick="addToCart('${product.name}', '${product.price}')">Add to Cart</button>
+        `;
+        grid.appendChild(div);
     });
-  </script></body>
+</script>
+
+</body>
 </html>
