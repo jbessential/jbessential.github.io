@@ -1,137 +1,106 @@
-<!DOCTYPE html><html lang="en"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JB Essential | Amazon Style</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="logo.png">
-</head><body>
-    <!-- Header -->
-    <header>
-        <div class="navbar">
-            <img src="logo.png" alt="JB Essential" class="logo">
-            <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#categories">Categories</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#cart">Cart 🛒</a></li>
-                </ul>
-            </nav>
-            <input type="text" id="searchInput" placeholder="Search products...">
-        </div>
-    </header><!-- Banner -->
-<section id="home" class="banner">
-    <img src="banner1.jpg" class="slide" style="display: block;">
-    <img src="banner2.jpg" class="slide">
-    <img src="banner3.jpg" class="slide">
-</section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JB Essential - Your One Stop Shop</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- 🟦 NAVBAR -->
+  <header>
+    <div class="logo"> <img src="logo.png" alt="JB Essential" /> </div>
+    <nav>
+      <input type="text" id="searchBar" placeholder="Search products..." />
+      <a href="#">Home</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="https://instagram.com/jb__essential" target="_blank">Instagram</a>
+      <a href="#cart">🛒 Cart (<span id="cartCount">0</span>)</a>
+    </nav>
+  </header>
 
-<!-- Categories -->
-<section id="categories">
-    <h2>Top Categories</h2>
+  <!-- 🔄 BANNER -->
+  <section class="banner" id="bannerSection">
+    <img src="banner1.jpg" alt="Banner" class="banner-img" id="bannerImage" />
+  </section>
+
+  <!-- 📂 CATEGORY SECTION -->
+  <section class="categories">
+    <h2>Categories</h2>
     <div class="category-list">
-        <button>Home & Kitchen</button>
-        <button>Women</button>
-        <button>Kids</button>
-        <button>Beauty</button>
-        <button>Jewellery</button>
-        <button>Bags</button>
-        <button>Footwears</button>
-        <button>Electronics</button>
-        <button>Fitness</button>
+      <button onclick="filterCategory('all')">All</button>
+      <button onclick="filterCategory('home')">Home</button>
+      <button onclick="filterCategory('kitchen')">Kitchen</button>
+      <button onclick="filterCategory('women')">Women</button>
+      <button onclick="filterCategory('kids')">Kids</button>
+      <button onclick="filterCategory('beauty')">Beauty</button>
+      <button onclick="filterCategory('jewellery')">Jewellery</button>
+      <button onclick="filterCategory('bags')">Bags</button>
+      <button onclick="filterCategory('footwear')">Footwear</button>
+      <button onclick="filterCategory('electronics')">Electronics</button>
+      <button onclick="filterCategory('sports')">Sports & Fitness</button>
     </div>
-</section>
+  </section>
 
-<!-- Product Section -->
-<section id="products">
-    <h2>Our Products</h2>
-    <div id="productContainer"></div>
-</section>
+  <!-- 🛍️ PRODUCT LISTING -->
+  <section class="products" id="productContainer">
+    <!-- Dynamic product cards inserted here -->
+  </section>
 
-<!-- About Section -->
-<section id="about">
-    <h2>About JB Essential</h2>
-    <p>JB Essential is your one-stop online store for affordable and quality home, fashion, and electronics products. We're dedicated to giving you the very best with a focus on customer support, fast delivery, and easy return policy.</p>
-</section>
+  <!-- 📦 ABOUT / CONTACT -->
+  <section id="about">
+    <h3>About Us</h3>
+    <p>JB Essential is your trusted reselling platform providing quality products with fast delivery and easy return.</p>
+  </section>
+  <section id="contact">
+    <h3>Contact</h3>
+    <p>Email: contact.JBessential@gmail.com | Phone: +91-9876543210</p>
+  </section>
 
-<!-- Contact Section -->
-<section id="contact">
-    <h2>Contact Us</h2>
-    <p>Email: contact.JBessential@gmail.com</p>
-    <p>Instagram: <a href="https://instagram.com/jb__essential" target="_blank">@jb__essential</a></p>
-</section>
+  <!-- 🤖 CHATBOT PLACEHOLDER -->
+  <div id="chatbotBox">Chatbot coming soon...</div>
 
-<!-- Cart Section -->
-<section id="cart">
-    <h2>Cart</h2>
-    <div id="cartItems"></div>
-    <p>Total: ₹<span id="totalPrice">0</span></p>
-    <button onclick="checkoutWhatsApp()">Checkout via WhatsApp</button>
-</section>
+  <!-- 📥 SCRIPTS -->
+  <script>
+    // Product fetch & render from backend (PHP/json)
+    fetch('products.json')
+      .then(res => res.json())
+      .then(data => renderProducts(data));
 
-<!-- Chatbot (Future AI Assistant) -->
-<div id="chatbot">
-    <p>🤖 AI Assistant coming soon...</p>
-</div>
-
-<!-- Scripts -->
-<script>
-    // Banner Auto Slide
-    let index = 0;
-    const slides = document.querySelectorAll(".slide");
-    setInterval(() => {
-        slides.forEach(slide => slide.style.display = "none");
-        index = (index + 1) % slides.length;
-        slides[index].style.display = "block";
-    }, 3000);
-
-    // Products
-    const products = [
-        { name: "Saree Combo", price: 499, image: "product1.jpg", desc: "Silk Designer Saree." },
-        { name: "Kitchen Set", price: 799, image: "product2.jpg", desc: "Non-stick Cookware" },
-        { name: "Wireless Earbuds", price: 1199, image: "product3.jpg", desc: "Bluetooth 5.0" }
-    ];
-
-    const productContainer = document.getElementById("productContainer");
-    const cartItems = [];
-
-    products.forEach((product, i) => {
-        const div = document.createElement("div");
-        div.className = "product";
-        div.innerHTML = `
-            <img src="${product.image}" alt="${product.name}">
-            <h3>${product.name}</h3>
-            <p>${product.desc}</p>
-            <p>₹${product.price}</p>
-            <button onclick="addToCart(${i})">Add to Cart</button>
+    function renderProducts(products) {
+      const container = document.getElementById('productContainer');
+      container.innerHTML = '';
+      products.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product';
+        card.innerHTML = `
+          <img src="uploads/${product.image}" alt="${product.title}" />
+          <h4>${product.title}</h4>
+          <p>${product.description}</p>
+          <strong>₹${product.price}</strong><br />
+          <button onclick="addToCart(${product.id})">Add to Cart</button>
         `;
-        productContainer.appendChild(div);
-    });
-
-    function addToCart(i) {
-        cartItems.push(products[i]);
-        updateCart();
+        container.appendChild(card);
+      });
     }
 
-    function updateCart() {
-        const cart = document.getElementById("cartItems");
-        const total = document.getElementById("totalPrice");
-        cart.innerHTML = "";
-        let sum = 0;
-        cartItems.forEach(item => {
-            cart.innerHTML += <p>${item.name} - ₹${item.price}</p>;
-            sum += item.price;
-        });
-        total.textContent = sum;
+    // Category filter
+    function filterCategory(cat) {
+      const allCards = document.querySelectorAll('.product');
+      allCards.forEach(card => {
+        card.style.display = cat === 'all' || card.classList.contains(cat) ? 'block' : 'none';
+      });
     }
 
-    function checkoutWhatsApp() {
-        const message = cartItems.map(item => ${item.name} - ₹${item.price}).join("%0A");
-        const total = cartItems.reduce((sum, item) => sum + item.price, 0);
-        window.open(`https://wa.me/91XXXXXXXXXX?text=Products:%0A${message}%0ATotal: ₹${total}%0AAddress: `);
+    // Cart logic
+    let cartCount = 0;
+    function addToCart(id) {
+      cartCount++;
+      document.getElementById('cartCount').innerText = cartCount;
+      alert('Item added to cart!');
     }
-</script>
-
-</body></html>
- 
+  </script>
+</body>
+</html>
