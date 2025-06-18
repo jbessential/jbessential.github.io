@@ -1,1 +1,133 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JB Essential Admin Panel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="file"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background: #ff9900;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .preview {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="login">
+      <h2>Admin Login</h2>
+      <label for="password">Enter Password:</label>
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="checkPassword()">Login</button>
+    </div><div id="adminPanel" class="hidden">
+  <h2>Upload Product</h2>
+  <label>Product Name:</label>
+  <input type="text" id="productName" />
 
+  <label>Price:</label>
+  <input type="number" id="productPrice" />
+
+  <label>Description:</label>
+  <textarea id="productDesc"></textarea>
+
+  <label>Upload Image:</label>
+  <input type="file" id="productImage" accept="image/*" />
+
+  <label>Upload Banner:</label>
+  <input type="file" id="bannerImage" accept="image/*" />
+
+  <button onclick="previewProduct()">Preview</button>
+
+  <div class="preview" id="preview"></div>
+</div>
+
+  </div>  <script>
+    const correctPassword = "JBessentialadminpanel786";
+
+    function checkPassword() {
+      const entered = document.getElementById("password").value;
+      if (entered === correctPassword) {
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("adminPanel").classList.remove("hidden");
+      } else {
+        alert("Incorrect password!");
+      }
+    }
+
+    function previewProduct() {
+      const name = document.getElementById("productName").value;
+      const price = document.getElementById("productPrice").value;
+      const desc = document.getElementById("productDesc").value;
+      const imgFile = document.getElementById("productImage").files[0];
+      const bannerFile = document.getElementById("bannerImage").files[0];
+
+      let reader = new FileReader();
+      let bannerReader = new FileReader();
+
+      reader.onload = function(e) {
+        bannerReader.onload = function(b) {
+          document.getElementById("preview").innerHTML = `
+            <h3>${name}</h3>
+            <img src="${e.target.result}" width="100%" /><br />
+            <strong>₹${price}</strong>
+            <p>${desc}</p>
+            <h4>Banner:</h4>
+            <img src="${b.target.result}" width="100%" />
+          `;
+        }
+        bannerReader.readAsDataURL(bannerFile);
+      }
+
+      if (imgFile && bannerFile) {
+        reader.readAsDataURL(imgFile);
+      } else {
+        alert("Please upload both product image and banner.");
+      }
+    }
+  </script></body>
+</html>
