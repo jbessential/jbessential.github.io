@@ -1,116 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
+><!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JB Essential - Amazon Style</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <title>JB Essential - Best Products Online</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; background: #f9f9f9; }
-    header { background: #232f3e; color: white; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body { background: #f9f9f9; }
+    header { background: #232f3e; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
     header img { height: 40px; }
     nav a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; }
-    .banner { width: 100%; max-height: 250px; overflow: hidden; position: relative; }
-    .banner img { width: 100%; display: none; }
+    .banner { width: 100%; overflow: hidden; }
+    .banner img { width: 100%; height: auto; display: none; }
     .banner img.active { display: block; }
-    .categories { display: flex; overflow-x: auto; padding: 10px; background: white; border-bottom: 1px solid #ccc; }
-    .categories div { margin-right: 15px; background: #eee; padding: 8px 15px; border-radius: 20px; cursor: pointer; white-space: nowrap; }
-    .search { padding: 15px; background: white; text-align: center; }
-    .search input { width: 80%; padding: 10px; }
-    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; padding: 15px; }
-    .product { background: white; border: 1px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; }
-    .product img { width: 100%; height: 150px; object-fit: cover; }
-    .cart-btn { background: #ff9900; color: white; padding: 8px; border: none; cursor: pointer; margin-top: 10px; border-radius: 5px; }
-    footer { text-align: center; background: #232f3e; color: white; padding: 15px; margin-top: 20px; }
-    .about { background: white; padding: 20px; margin: 15px; border-radius: 8px; }
-    .chatbot { position: fixed; bottom: 10px; right: 10px; background: #00bfa5; color: white; padding: 10px 15px; border-radius: 20px; }
+    .categories { display: flex; flex-wrap: wrap; justify-content: center; padding: 10px; background: white; }
+    .cat { margin: 10px; padding: 10px 20px; background: #232f3e; color: white; border-radius: 25px; cursor: pointer; }
+    .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; padding: 20px; }
+    .product { background: white; border-radius: 10px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .product img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; }
+    .product h3 { font-size: 16px; margin: 5px 0; }
+    .product p { color: green; font-weight: bold; }
+    .cart-btn { background: #ff9900; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; color: white; margin-top: 5px; }
+    .footer { background: #232f3e; color: white; padding: 20px; text-align: center; }
+    .floating-btn { position: fixed; bottom: 15px; right: 15px; background: green; color: white; border: none; border-radius: 50%; padding: 15px; font-size: 20px; cursor: pointer; }
+    .cart-icon { position: absolute; top: 20px; right: 20px; font-size: 22px; color: white; cursor: pointer; }
+    .about { padding: 20px; background: #fff; margin: 20px; border-radius: 10px; }
   </style>
 </head>
-<body>
-  <header>
-    <img src="logo.png" alt="JB Essential Logo" />
+<body>  <header>
+    <img src="logo.png" alt="JB Essential" />
     <nav>
-      <a href="#home">Home</a>
+      <a href="#">Home</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
-  </header>
-
-  <div class="banner">
-    <img src="https://via.placeholder.com/1200x250?text=Banner+1" class="active" />
-    <img src="https://via.placeholder.com/1200x250?text=Banner+2" />
-    <img src="https://via.placeholder.com/1200x250?text=Banner+3" />
-  </div>
-
-  <div class="categories">
-    <div>Home</div><div>Kitchen</div><div>Women</div><div>Kids</div><div>Beauty</div><div>Jewellery</div><div>Bags</div><div>Footwear</div><div>Electronics</div><div>Fitness</div>
-  </div>
-
-  <div class="search">
-    <input type="text" placeholder="Search for products..." oninput="searchProducts(this.value)" />
-  </div>
-
-  <div class="products" id="productList">
-    <!-- Product will load from Firebase -->
-  </div>
-
-  <div class="about" id="about">
+    <div class="cart-icon" onclick="openWhatsApp()">
+      <i class="fas fa-shopping-cart"></i>
+    </div>
+  </header>  <div class="banner">
+    <img src="banner1.jpg" class="active">
+    <img src="banner2.jpg">
+    <img src="banner3.jpg">
+  </div>  <div class="categories">
+    <div class="cat">Home</div>
+    <div class="cat">Kitchen</div>
+    <div class="cat">Women</div>
+    <div class="cat">Kids</div>
+    <div class="cat">Beauty</div>
+    <div class="cat">Jewellery</div>
+    <div class="cat">Bags</div>
+    <div class="cat">Footwear</div>
+    <div class="cat">Electronics</div>
+    <div class="cat">Fitness</div>
+  </div>  <div class="products" id="product-list">
+    <!-- Products will be injected here by JS -->
+  </div>  <div class="about" id="about">
     <h2>About Us</h2>
-    <p>JB Essential ek trusted online reselling store hai jahan aapko top quality aur latest trend ke products milte hain best price mein. Cash on Delivery aur WhatsApp order facility ke saath hum aapke shopping experience ko simple banate hain.</p>
-  </div>
-
-  <footer>
-    <p>📞 9560948662 | ✉️ contact.JBessential@gmail.com | 💸 UPI Accepted</p>
-    <p>Cash on Delivery Available | Follow us: <a href="https://instagram.com/jb__essential" style="color:#ff9900;">@jb__essential</a></p>
-  </footer>
-
-  <div class="chatbot">AI Chat</div>
+    <p>Welcome to JB Essential, your one-stop shop for quality, affordability, and trust. We bring top trending products at unbeatable prices, all with the ease of WhatsApp ordering and Cash on Delivery. Resell or buy, JB Essential is built for every Indian dreamer.</p>
+  </div>  <div class="footer" id="contact">
+    <p>📞 Call/WhatsApp: <a style="color:#ff9900" href="https://wa.me/919560948662">9560948662</a></p>
+    <p>📧 Email: contact.JBessential@gmail.com</p>
+    <p>📦 Cash on Delivery Available | 💳 UPI Accepted</p>
+    <p>📸 Follow on Instagram: <a style="color:#ff9900" href="https://instagram.com/jb__essential">@jb__essential</a></p>
+  </div><button class="floating-btn" onclick="openWhatsApp()"><i class="fab fa-whatsapp"></i></button>
 
   <script>
-    // Banner slider
-    let slideIndex = 0;
-    const slides = document.querySelectorAll('.banner img');
+    const bannerImgs = document.querySelectorAll(".banner img");
+    let index = 0;
     setInterval(() => {
-      slides.forEach(slide => slide.classList.remove('active'));
-      slideIndex = (slideIndex + 1) % slides.length;
-      slides[slideIndex].classList.add('active');
+      bannerImgs.forEach((img, i) => img.classList.remove("active"));
+      index = (index + 1) % bannerImgs.length;
+      bannerImgs[index].classList.add("active");
     }, 3000);
 
-    // Firebase load products
-    async function loadProducts() {
-      const res = await fetch("https://jbessential-def67-default-rtdb.firebaseio.com/products.json");
-      const data = await res.json();
-      const productList = document.getElementById("productList");
-      productList.innerHTML = '';
-      for (let id in data) {
-        const p = data[id];
-        productList.innerHTML += `
-          <div class="product">
-            <img src="${p.image}" alt="${p.name}" />
-            <h3>${p.name}</h3>
-            <p>₹${p.price}</p>
-            <button class="cart-btn" onclick="orderProduct('${p.name}', '${p.price}')">Order on WhatsApp</button>
-          </div>
-        `;
-      }
+    const products = [
+      { name: "Stylish Saree", price: 499, image: "saree.jpg" },
+      { name: "Wireless Earbuds", price: 999, image: "earbuds.jpg" },
+      { name: "Kids Toy Set", price: 299, image: "toys.jpg" }
+    ];
+
+    const cart = [];
+    const productList = document.getElementById("product-list");
+    products.forEach((prod, idx) => {
+      let div = document.createElement("div");
+      div.className = "product";
+      div.innerHTML = `
+        <img src="${prod.image}" alt="${prod.name}" />
+        <h3>${prod.name}</h3>
+        <p>₹${prod.price}</p>
+        <button class="cart-btn" onclick="addToCart(${idx})">Add to Cart</button>
+      `;
+      productList.appendChild(div);
+    });
+
+    function addToCart(i) {
+      cart.push(products[i]);
+      alert(products[i].name + " added to cart!");
     }
 
-    function orderProduct(name, price) {
-      const message = Hello! I want to order:\nProduct: ${name}\nPrice: ₹${price}\nAddress:;
+    function openWhatsApp() {
+      if (cart.length === 0) return alert("Cart is empty!");
+      let message = "Order Details:\n";
+      let total = 0;
+      cart.forEach((p, i) => {
+        message += ${i+1}) ${p.name} - ₹${p.price}\n;
+        total += p.price;
+      });
+      message += `\n*Total: ₹${total}*\n\nDelivery Address: `;
       window.open(https://wa.me/919560948662?text=${encodeURIComponent(message)});
     }
-
-    function searchProducts(term) {
-      term = term.toLowerCase();
-      const items = document.querySelectorAll(".product");
-      items.forEach(p => {
-        const name = p.querySelector("h3").innerText.toLowerCase();
-        p.style.display = name.includes(term) ? "block" : "none";
-      });
-    }
-
-    loadProducts();
-  </script>
-
-</body>
+  </script></body>
 </html>
