@@ -1,118 +1,93 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html><html lang="en">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JB Essential Admin Panel</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";const firebaseConfig = {
+  apiKey: "AIzaSyBlnTXaiylzMn67Z4tKc46LwDLArlEBcnE",
+  authDomain: "jbessential-def67.firebaseapp.com",
+  projectId: "jbessential-def67",
+  storageBucket: "jbessential-def67.appspot.com",
+  messagingSenderId: "380875888035",
+  appId: "1:380875888035:web:cf9b2e99b9a0b727533616",
+  measurementId: "G-9TF8NH131S"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+document.getElementById("productForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const title = document.getElementById("title").value;
+  const price = document.getElementById("price").value;
+  const description = document.getElementById("description").value;
+  const category = document.getElementById("category").value;
+  const image = document.getElementById("image").files[0];
+
+  const reader = new FileReader();
+  reader.onload = async function(event) {
+    try {
+      await addDoc(collection(db, "products"), {
+        title,
+        price,
+        description,
+        category,
+        image: event.target.result
+      });
+      alert("Product uploaded successfully!");
+      document.getElementById("productForm").reset();
+    } catch (error) {
+      alert("Error uploading product.");
+    }
+  }
+  reader.readAsDataURL(image);
+});
+
+  </script>
   <style>
     body {
-      background-color: #f8f9fa;
-      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
     }
-    .container {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
+    .form-container {
+      max-width: 600px;
+      margin: 30px auto;
       background: #fff;
-      border-radius: 8px;
+      padding: 20px;
+      border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    .preview {
-      margin-top: 20px;
-    }
-    .product-image {
-      max-width: 100px;
-      max-height: 100px;
-    }
-    .product-card {
-      margin-bottom: 10px;
-    }
   </style>
-</head><body>
-  <div class="container">
-    <h2 class="mb-4">JB Essential Admin Panel</h2>
+</head>
+<body>
+  <div class="form-container">
+    <h3 class="text-center">Admin Panel (JBessentialadminpanel786)</h3>
     <form id="productForm">
-      <div class="form-group">
-        <label for="productName">Product Name</label>
-        <input type="text" class="form-control" id="productName" required>
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" required>
       </div>
-      <div class="form-group">
-        <label for="productPrice">Price</label>
-        <input type="number" class="form-control" id="productPrice" required>
+      <div class="mb-3">
+        <label class="form-label">Price (₹)</label>
+        <input type="number" class="form-control" id="price" required>
       </div>
-      <div class="form-group">
-        <label for="productDescription">Description</label>
-        <textarea class="form-control" id="productDescription" required></textarea>
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" id="description" required></textarea>
       </div>
-      <div class="form-group">
-        <label for="productRate">Rate</label>
-        <input type="text" class="form-control" id="productRate" required>
+      <div class="mb-3">
+        <label class="form-label">Category</label>
+        <input type="text" class="form-control" id="category" required>
       </div>
-      <div class="form-group">
-        <label for="productImage">Product Image</label>
-        <input type="file" class="form-control" id="productImage" accept="image/*" required>
+      <div class="mb-3">
+        <label class="form-label">Image</label>
+        <input type="file" class="form-control" id="image" accept="image/*" required>
       </div>
-      <button type="submit" class="btn btn-primary">Upload Product</button>
+      <button type="submit" class="btn btn-primary w-100">Upload Product</button>
     </form>
-    <div class="preview mt-4">
-      <h4>Preview:</h4>
-      <div id="productPreview"></div>
-    </div>
-  </div>  <!-- Firebase SDK -->  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBlnTXaiylzMn67Z4tKc46LwDLArlEBcnE",
-      authDomain: "jbessential-def67.firebaseapp.com",
-      projectId: "jbessential-def67",
-      storageBucket: "jbessential-def67.appspot.com",
-      messagingSenderId: "380875888035",
-      appId: "1:380875888035:web:cf9b2e99b9a0b727533616",
-      measurementId: "G-9TF8NH131S"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    const form = document.getElementById('productForm');
-    const preview = document.getElementById('productPreview');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById('productName').value;
-      const price = document.getElementById('productPrice').value;
-      const description = document.getElementById('productDescription').value;
-      const rate = document.getElementById('productRate').value;
-      const imageFile = document.getElementById('productImage').files[0];
-
-      const reader = new FileReader();
-      reader.onloadend = async function () {
-        const imageData = reader.result;
-        await addDoc(collection(db, "products"), {
-          name,
-          price,
-          description,
-          rate,
-          image: imageData
-        });
-
-        preview.innerHTML = `
-          <div class="product-card card p-2">
-            <img src="${imageData}" class="product-image card-img-top" />
-            <div class="card-body">
-              <h5 class="card-title">${name}</h5>
-              <p class="card-text">Price: ₹${price}</p>
-              <p class="card-text">${description}</p>
-              <p class="card-text">Rating: ${rate}</p>
-            </div>
-          </div>`;
-
-        form.reset();
-      };
-      reader.readAsDataURL(imageFile);
-    });
-  </script></body></html>
+  </div>
+</body>
+</html>
