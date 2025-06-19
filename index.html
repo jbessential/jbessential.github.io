@@ -1,107 +1,116 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JB Essential - Home</title>
+  <title>JB Essential - Amazon Style</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f8f8f8;
-    }
-    header {
-      background: #232f3e;
-      padding: 10px;
-      color: white;
-      text-align: center;
-    }
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-    .product {
-      background: white;
-      border-radius: 10px;
-      padding: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .product img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-    }
-    .product h3 {
-      margin: 10px 0 5px;
-    }
-    .product p {
-      margin: 0;
-      color: #333;
-    }
-    .whatsapp {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 12px;
-      background: #25d366;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-    footer {
-      background: #232f3e;
-      color: white;
-      text-align: center;
-      padding: 10px;
-    }
+    body { margin: 0; font-family: Arial, sans-serif; background: #f9f9f9; }
+    header { background: #232f3e; color: white; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; }
+    header img { height: 40px; }
+    nav a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; }
+    .banner { width: 100%; max-height: 250px; overflow: hidden; position: relative; }
+    .banner img { width: 100%; display: none; }
+    .banner img.active { display: block; }
+    .categories { display: flex; overflow-x: auto; padding: 10px; background: white; border-bottom: 1px solid #ccc; }
+    .categories div { margin-right: 15px; background: #eee; padding: 8px 15px; border-radius: 20px; cursor: pointer; white-space: nowrap; }
+    .search { padding: 15px; background: white; text-align: center; }
+    .search input { width: 80%; padding: 10px; }
+    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; padding: 15px; }
+    .product { background: white; border: 1px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; }
+    .product img { width: 100%; height: 150px; object-fit: cover; }
+    .cart-btn { background: #ff9900; color: white; padding: 8px; border: none; cursor: pointer; margin-top: 10px; border-radius: 5px; }
+    footer { text-align: center; background: #232f3e; color: white; padding: 15px; margin-top: 20px; }
+    .about { background: white; padding: 20px; margin: 15px; border-radius: 8px; }
+    .chatbot { position: fixed; bottom: 10px; right: 10px; background: #00bfa5; color: white; padding: 10px 15px; border-radius: 20px; }
   </style>
 </head>
 <body>
   <header>
-    <h1>Welcome to JB Essential</h1>
-    <p>Cash on Delivery Available | Contact: 9560948662 | Email: contact.JBessential@gmail.com</p>
-  </header>  <div class="product-grid" id="productGrid">
-    <!-- Products will be displayed here -->
-  </div>  <footer>
-    <p>&copy; 2025 JB Essential. All rights reserved.</p>
-  </footer>  <!-- Firebase Setup -->  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+    <img src="logo.png" alt="JB Essential Logo" />
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBlnTXaiylzMn67Z4tKc46LwDLArlEBcnE",
-      authDomain: "jbessential-def67.firebaseapp.com",
-      projectId: "jbessential-def67",
-      storageBucket: "jbessential-def67.appspot.com",
-      messagingSenderId: "380875888035",
-      appId: "1:380875888035:web:cf9b2e99b9a0b727533616",
-      measurementId: "G-9TF8NH131S"
-    };
+  <div class="banner">
+    <img src="https://via.placeholder.com/1200x250?text=Banner+1" class="active" />
+    <img src="https://via.placeholder.com/1200x250?text=Banner+2" />
+    <img src="https://via.placeholder.com/1200x250?text=Banner+3" />
+  </div>
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+  <div class="categories">
+    <div>Home</div><div>Kitchen</div><div>Women</div><div>Kids</div><div>Beauty</div><div>Jewellery</div><div>Bags</div><div>Footwear</div><div>Electronics</div><div>Fitness</div>
+  </div>
 
+  <div class="search">
+    <input type="text" placeholder="Search for products..." oninput="searchProducts(this.value)" />
+  </div>
+
+  <div class="products" id="productList">
+    <!-- Product will load from Firebase -->
+  </div>
+
+  <div class="about" id="about">
+    <h2>About Us</h2>
+    <p>JB Essential ek trusted online reselling store hai jahan aapko top quality aur latest trend ke products milte hain best price mein. Cash on Delivery aur WhatsApp order facility ke saath hum aapke shopping experience ko simple banate hain.</p>
+  </div>
+
+  <footer>
+    <p>📞 9560948662 | ✉️ contact.JBessential@gmail.com | 💸 UPI Accepted</p>
+    <p>Cash on Delivery Available | Follow us: <a href="https://instagram.com/jb__essential" style="color:#ff9900;">@jb__essential</a></p>
+  </footer>
+
+  <div class="chatbot">AI Chat</div>
+
+  <script>
+    // Banner slider
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.banner img');
+    setInterval(() => {
+      slides.forEach(slide => slide.classList.remove('active'));
+      slideIndex = (slideIndex + 1) % slides.length;
+      slides[slideIndex].classList.add('active');
+    }, 3000);
+
+    // Firebase load products
     async function loadProducts() {
-      const querySnapshot = await getDocs(collection(db, "products"));
-      const grid = document.getElementById("productGrid");
-      grid.innerHTML = "";
-
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        const product = document.createElement("div");
-        product.className = "product";
-        product.innerHTML = `
-          <img src="${data.image}" alt="Product Image" />
-          <h3>${data.name}</h3>
-          <p>${data.description}</p>
-          <p><strong>Price:</strong> ₹${data.price}</p>
-          <a class="whatsapp" href="https://wa.me/919560948662?text=Hi, I want to order: ${encodeURIComponent(data.name)} for ₹${data.price}" target="_blank">Order on WhatsApp</a>
+      const res = await fetch("https://jbessential-def67-default-rtdb.firebaseio.com/products.json");
+      const data = await res.json();
+      const productList = document.getElementById("productList");
+      productList.innerHTML = '';
+      for (let id in data) {
+        const p = data[id];
+        productList.innerHTML += `
+          <div class="product">
+            <img src="${p.image}" alt="${p.name}" />
+            <h3>${p.name}</h3>
+            <p>₹${p.price}</p>
+            <button class="cart-btn" onclick="orderProduct('${p.name}', '${p.price}')">Order on WhatsApp</button>
+          </div>
         `;
-        grid.appendChild(product);
+      }
+    }
+
+    function orderProduct(name, price) {
+      const message = Hello! I want to order:\nProduct: ${name}\nPrice: ₹${price}\nAddress:;
+      window.open(https://wa.me/919560948662?text=${encodeURIComponent(message)});
+    }
+
+    function searchProducts(term) {
+      term = term.toLowerCase();
+      const items = document.querySelectorAll(".product");
+      items.forEach(p => {
+        const name = p.querySelector("h3").innerText.toLowerCase();
+        p.style.display = name.includes(term) ? "block" : "none";
       });
     }
 
     loadProducts();
-  </script></body>
+  </script>
+
+</body>
 </html>
