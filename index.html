@@ -1,253 +1,107 @@
-<!DOCTYPE html><html lang="en"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JB Essential - Amazon Style</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }body {
-        background-color: #f2f2f2;
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JB Essential - Home</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8f8f8;
     }
-
     header {
-        background-color: #232f3e;
-        color: white;
-        padding: 10px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: sticky;
-        top: 0;
-        z-index: 999;
+      background: #232f3e;
+      padding: 10px;
+      color: white;
+      text-align: center;
     }
-
-    .logo {
-        display: flex;
-        align-items: center;
-    }
-
-    .logo img {
-        height: 40px;
-        margin-right: 10px;
-    }
-
-    .search-bar input {
-        padding: 8px;
-        width: 300px;
-        border-radius: 5px;
-        border: none;
-    }
-
-    .cart {
-        position: relative;
-        cursor: pointer;
-    }
-
-    .cart i {
-        font-size: 20px;
-    }
-
-    .cart-count {
-        background: red;
-        color: white;
-        font-size: 12px;
-        border-radius: 50%;
-        padding: 2px 6px;
-        position: absolute;
-        top: -5px;
-        right: -10px;
-    }
-
     .product-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 20px;
-        padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
     }
-
     .product {
-        background: white;
-        padding: 15px;
-        border-radius: 10px;
-        text-align: center;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
     .product img {
-        width: 100%;
-        height: 150px;
-        object-fit: cover;
-        border-radius: 10px;
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
     }
-
     .product h3 {
-        font-size: 16px;
-        margin: 10px 0;
+      margin: 10px 0 5px;
     }
-
     .product p {
-        color: green;
-        margin-bottom: 10px;
+      margin: 0;
+      color: #333;
     }
-
-    .product button {
-        background: #febd69;
-        border: none;
-        padding: 10px;
-        width: 100%;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: bold;
+    .whatsapp {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: #25d366;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
     }
-
-    #cartModal {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 300px;
-        height: 100vh;
-        background: white;
-        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        padding: 20px;
-        overflow-y: auto;
-        z-index: 9999;
-    }
-
-    #cartModal.active {
-        transform: translateX(0);
-    }
-
-    .cart-item {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 10px;
-    }
-
-    .cart-item span {
-        font-size: 14px;
-    }
-
-    .checkout {
-        margin-top: 20px;
-        text-align: center;
-    }
-
-    .checkout button {
-        padding: 10px 20px;
-        background-color: green;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
     footer {
-        background: #232f3e;
-        color: white;
-        text-align: center;
-        padding: 20px;
-        margin-top: 20px;
+      background: #232f3e;
+      color: white;
+      text-align: center;
+      padding: 10px;
     }
-</style>
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to JB Essential</h1>
+    <p>Cash on Delivery Available | Contact: 9560948662 | Email: contact.JBessential@gmail.com</p>
+  </header>  <div class="product-grid" id="productGrid">
+    <!-- Products will be displayed here -->
+  </div>  <footer>
+    <p>&copy; 2025 JB Essential. All rights reserved.</p>
+  </footer>  <!-- Firebase Setup -->  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
-</head><body>
-    <header>
-        <div class="logo">
-            <img src="logo.png" alt="JB Essential">
-            <h2>JB Essential</h2>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Search products...">
-        </div>
-        <div class="cart" onclick="toggleCart()">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-count" id="cartCount">0</span>
-        </div>
-    </header><div class="product-grid" id="productGrid">
-    <!-- Products will be injected here by admin uploads -->
-</div>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBlnTXaiylzMn67Z4tKc46LwDLArlEBcnE",
+      authDomain: "jbessential-def67.firebaseapp.com",
+      projectId: "jbessential-def67",
+      storageBucket: "jbessential-def67.appspot.com",
+      messagingSenderId: "380875888035",
+      appId: "1:380875888035:web:cf9b2e99b9a0b727533616",
+      measurementId: "G-9TF8NH131S"
+    };
 
-<div id="cartModal">
-    <h3>Your Cart</h3>
-    <div id="cartItems"></div>
-    <div class="checkout">
-        <p>Total: ₹<span id="cartTotal">0</span></p>
-        <button onclick="checkout()">Checkout via WhatsApp</button>
-    </div>
-</div>
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-<footer>
-    <p>📞 Contact: 9560948662 | 📧 Email: contact.JBessential@gmail.com</p>
-    <p>Follow us on Instagram: <a href="https://instagram.com/jb__essential" target="_blank" style="color:#febd69">@jb__essential</a></p>
-    <p>© 2025 JB Essential. All rights reserved.</p>
-</footer>
+    async function loadProducts() {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      const grid = document.getElementById("productGrid");
+      grid.innerHTML = "";
 
-<script>
-    let cart = [];
-
-    function toggleCart() {
-        document.getElementById("cartModal").classList.toggle("active");
-    }
-
-    function addToCart(name, price) {
-        cart.push({ name, price });
-        updateCart();
-    }
-
-    function updateCart() {
-        const cartItems = document.getElementById("cartItems");
-        const cartTotal = document.getElementById("cartTotal");
-        const cartCount = document.getElementById("cartCount");
-        cartItems.innerHTML = "";
-
-        let total = 0;
-        cart.forEach((item, index) => {
-            cartItems.innerHTML += <div class='cart-item'><span>${item.name}</span><span>₹${item.price}</span></div>;
-            total += parseInt(item.price);
-        });
-
-        cartCount.textContent = cart.length;
-        cartTotal.textContent = total;
-    }
-
-    function checkout() {
-        let message = "Order Details:%0A";
-        cart.forEach(item => {
-            message += 📦 ${item.name} - ₹${item.price}%0A;
-        });
-        let total = cart.reduce((sum, item) => sum + parseInt(item.price), 0);
-        message += Total: ₹${total};
-        window.open(https://wa.me/919560948662?text=${message}, '_blank');
-    }
-
-    // Placeholder product loader (use admin panel to generate this dynamically)
-    const sampleProducts = [
-        { name: "Wireless Earbuds", price: "999", img: "https://via.placeholder.com/200" },
-        { name: "Smart Watch", price: "1299", img: "https://via.placeholder.com/200" },
-        { name: "Kitchen Mixer", price: "2499", img: "https://via.placeholder.com/200" }
-    ];
-
-    const grid = document.getElementById("productGrid");
-    sampleProducts.forEach(product => {
-        const div = document.createElement("div");
-        div.className = "product";
-        div.innerHTML = `
-            <img src="${product.img}" alt="${product.name}" />
-            <h3>${product.name}</h3>
-            <p>₹${product.price}</p>
-            <button onclick="addToCart('${product.name}', '${product.price}')">Add to Cart</button>
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const product = document.createElement("div");
+        product.className = "product";
+        product.innerHTML = `
+          <img src="${data.image}" alt="Product Image" />
+          <h3>${data.name}</h3>
+          <p>${data.description}</p>
+          <p><strong>Price:</strong> ₹${data.price}</p>
+          <a class="whatsapp" href="https://wa.me/919560948662?text=Hi, I want to order: ${encodeURIComponent(data.name)} for ₹${data.price}" target="_blank">Order on WhatsApp</a>
         `;
-        grid.appendChild(div);
-    });
-</script>
+        grid.appendChild(product);
+      });
+    }
 
-</body>
+    loadProducts();
+  </script></body>
 </html>
