@@ -8,17 +8,33 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
     }
-    .navbar-brand img {
-      height: 40px;
+    .navbar {
+      background-color: #232f3e !important;
+    }
+    .navbar-brand, .navbar-brand img, .navbar-light .navbar-nav .nav-link, .btn-outline-success {
+      color: #ffffff !important;
+    }
+    .btn-outline-success {
+      border-color: #febd69;
+    }
+    .btn-outline-success:hover {
+      background-color: #febd69;
+      color: #111 !important;
     }
     .product-card {
+      background-color: #ffffff;
       border: 1px solid #ddd;
       border-radius: 10px;
       padding: 10px;
       text-align: center;
       min-width: 200px;
       margin: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .product-card:hover {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     }
     .product-carousel {
       display: flex;
@@ -32,10 +48,23 @@
       width: 100%;
       max-height: 300px;
       object-fit: cover;
+      border-radius: 8px;
+    }
+    .btn-success {
+      background-color: #ffa41c;
+      border-color: #ffa41c;
+    }
+    .btn-success:hover {
+      background-color: #ff9900;
+      border-color: #ff9900;
     }
     footer {
-      background-color: #f8f9fa;
+      background-color: #232f3e;
       padding: 20px;
+      color: #ffffff;
+    }
+    footer a {
+      color: #febd69;
     }
     .chatbot-placeholder {
       position: fixed;
@@ -43,16 +72,25 @@
       right: 20px;
       width: 250px;
       height: 300px;
-      background-color: #eee;
+      background-color: #fff;
       border: 1px solid #ccc;
       border-radius: 10px;
       padding: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .btn-outline-primary {
+      border-color: #37475a;
+      color: #37475a;
+    }
+    .btn-outline-primary:hover {
+      background-color: #37475a;
+      color: #fff;
     }
   </style>
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"><img src="logo.png" alt="Logo"> JB Essential</a>
       <form class="d-flex ms-auto">
