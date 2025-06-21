@@ -66,18 +66,6 @@
     footer a {
       color: #febd69;
     }
-    .chatbot-placeholder {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 250px;
-      height: 300px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      padding: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
     .btn-outline-primary {
       border-color: #37475a;
       color: #37475a;
@@ -87,28 +75,28 @@
       color: #fff;
     }
     .floating-cart, .floating-mini-tv, .floating-food {
-  position: fixed;
-  right: 10px;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 1000;
-}
+      position: fixed;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+    }
     .floating-cart {
-  top: 70px;
-  background-color: #ffa41c;
-  color: #000;
-}
+      top: 70px;
+      background-color: #ffa41c;
+      color: #000;
+    }
     .floating-mini-tv {
-  top: 120px;
-  background-color: #6f42c1;
-  color: #fff;
-}
+      top: 120px;
+      background-color: #6f42c1;
+      color: #fff;
+    }
     .floating-food {
       top: 170px;
       background-color: #dc3545;
@@ -135,32 +123,12 @@
       border-radius: 8px;
       z-index: 2000;
     }
-  .circle-budget {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: #febd69;
-  color: #111;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  cursor: pointer;
-  transition: transform 0.2s;
-  font-size: 14px;
-}
-.circle-budget:hover {
-  transform: scale(1.1);
-  background-color: #fcb040;
-}
-$1
+  </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
       <span class="navbar-brand">JB Essential</span>
-      
       <form class="d-flex mx-auto">
         <input class="form-control me-2" type="search" placeholder="Search products" />
         <button class="btn btn-outline-success" type="submit">Search</button>
@@ -168,33 +136,11 @@ $1
     </div>
   </nav>
 
-  $1
-      
-        <div class="circle-budget">₹199</div>
-        <div class="circle-budget">₹299</div>
-        <div class="circle-budget">₹999</div>
-        <div class="circle-budget">₹1999</div>
-      </div>
-    <div class="d-flex justify-content-around flex-wrap">
-  <div class="d-flex justify-content-center gap-3 flex-wrap mb-3">
-    <div class="circle-budget">₹99</div>
-    <div class="circle-budget">₹199</div>
-    <div class="circle-budget">₹299</div>
-    <div class="circle-budget">₹999</div>
-    <div class="circle-budget">₹1999</div>
-  </div>
-    <div class="d-flex justify-content-center gap-3 flex-wrap mb-3">
-      <div class="circle-budget">₹99</div>
-      <div class="circle-budget">₹199</div>
-      <div class="circle-budget">₹299</div>
-      <div class="circle-budget">₹999</div>
-      <div class="circle-budget">₹1999</div>
-    </div>
-      <span class="btn btn-outline-primary">Home</span>
-      <span class="btn btn-outline-primary">Kitchen</span>
-      <span class="btn btn-outline-primary">Women</span>
-      <span class="btn btn-outline-primary">Beauty</span>
-    </div>
+  <div class="text-center mt-3">
+    <span class="btn btn-outline-primary">Home</span>
+    <span class="btn btn-outline-primary">Kitchen</span>
+    <span class="btn btn-outline-primary">Women</span>
+    <span class="btn btn-outline-primary">Beauty</span>
   </div>
 
   <div class="banner mt-3">
@@ -202,52 +148,51 @@ $1
   </div>
 
   <div class="container mt-4">
-  <h3>Trending Products</h3>
-  <div class="product-carousel">
-    <div class="product-card">
-      <img src="https://via.placeholder.com/150" alt="Product 1" class="img-fluid" />
-      <h5>Product 1</h5>
-      <p>Rs. 299</p>
-      <p>Nice product description.</p>
-      <input type="number" class="form-control qty" value="1" min="1" />
-      <button class="btn btn-success mt-2 add-to-cart">Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="https://via.placeholder.com/150" alt="Product 2" class="img-fluid" />
-      <h5>Product 2</h5>
-      <p>Rs. 399</p>
-      <p>Awesome item.</p>
-      <input type="number" class="form-control qty" value="1" min="1" />
-      <button class="btn btn-success mt-2 add-to-cart">Add to Cart</button>
+    <h3>Trending Products</h3>
+    <div class="product-carousel">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150" alt="Product 1" class="img-fluid" />
+        <h5>Product 1</h5>
+        <p>Rs. 299</p>
+        <p>Nice product description.</p>
+        <input type="number" class="form-control qty" value="1" min="1" />
+        <button class="btn btn-success mt-2 add-to-cart">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150" alt="Product 2" class="img-fluid" />
+        <h5>Product 2</h5>
+        <p>Rs. 399</p>
+        <p>Awesome item.</p>
+        <input type="number" class="form-control qty" value="1" min="1" />
+        <button class="btn btn-success mt-2 add-to-cart">Add to Cart</button>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="container mt-4">
-  <h3>Daily Deals</h3>
-  <div class="row">
-    <div class="col-md-4">
-      <div class="product-card">
-        <img src="https://via.placeholder.com/150" alt="Product 3" class="img-fluid" />
-        <h5>Product 3</h5>
-        <p>Rs. 249</p>
-        <p>Essential daily item.</p>
-        <input type="number" class="form-control qty" value="1" min="1" />
-        <button class="btn btn-success mt-2 add-to-cart">Add to Cart</button>
+  <div class="container mt-4">
+    <h3>Daily Deals</h3>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="product-card">
+          <img src="https://via.placeholder.com/150" alt="Product 3" class="img-fluid" />
+          <h5>Product 3</h5>
+          <p>Rs. 249</p>
+          <p>Essential daily item.</p>
+          <input type="number" class="form-control qty" value="1" min="1" />
+          <button class="btn btn-success mt-2 add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="product-card">
+          <img src="https://via.placeholder.com/150" alt="Product 4" class="img-fluid" />
+          <h5>Product 4</h5>
+          <p>Rs. 199</p>
+          <p>Everyday beauty solution.</p>
+          <input type="number" class="form-control qty" value="1" min="1" />
+          <button class="btn btn-success mt-2 add-to-cart">Add to Cart</button>
+        </div>
       </div>
     </div>
-    <div class="col-md-4">
-      <div class="product-card">
-        <img src="https://via.placeholder.com/150" alt="Product 4" class="img-fluid" />
-        <h5>Product 4</h5>
-        <p>Rs. 199</p>
-        <p>Everyday beauty solution.</p>
-        <input type="number" class="form-control qty" value="1" min="1" />
-        <button class="btn btn-success mt-2 add-to-cart">Add to Cart</button>
-      </div>
-    </div>
-  </div>
-</div>
   </div>
 
   <div id="cart-section" class="container mt-4">
@@ -267,8 +212,6 @@ $1
       <p>Email: contact.jbessential@gmail.com | Instagram: <a href="https://instagram.com/jb__essential" target="_blank">jb__essential</a></p>
     </div>
   </footer>
-
-  
 
   <div class="floating-cart" onclick="document.getElementById('cart-section').style.display='block'">🛒</div>
   <div class="floating-mini-tv" onclick="toggleComingSoon('Mini TV feature coming soon!')">📺</div>
@@ -327,4 +270,3 @@ $1
   </script>
 </body>
 </html>
-
