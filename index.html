@@ -1,4 +1,4 @@
-<!-- Full updated index.html with working Add to Cart and WhatsApp Checkout + Autocalculate + Accurate Cart Filtering -->
+<!-- Full updated index.html with advanced categories and product sliders -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,14 +28,17 @@
     .product-card {
       background-color: var(--card-bg); border: 1px solid #ddd; border-radius: 10px; padding: 10px;
       text-align: center; margin: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      flex: 0 0 auto;
     }
     .banner img { width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; }
     .category-bar {
-      display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;
+      display: flex; gap: 10px; overflow-x: auto;
       background: var(--card-bg); padding: 10px; margin-top: 15px; border-radius: 8px;
+      scroll-snap-type: x mandatory;
     }
     .category-bar span {
-      background: #232f3e; color: #fff; padding: 6px 12px; border-radius: 20px; cursor: pointer;
+      background: #232f3e; color: #fff; padding: 6px 12px; border-radius: 20px; cursor: pointer; white-space: nowrap;
+      scroll-snap-align: start;
     }
     .floating-cart {
       position: fixed; right: 10px; top: 70px; font-size: 20px; cursor: pointer; z-index: 1000;
@@ -48,14 +51,15 @@
       background: #fff; border-radius: 50%; padding: 10px; cursor: pointer;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
+    .slider-section {
+      margin-bottom: 30px;
+    }
+    .slider-section h4 { margin: 20px 0 10px 10px; }
     .product-slider-wrapper {
-      display: flex; align-items: center; overflow-x: auto;
-      scroll-snap-type: x mandatory; padding-bottom: 10px;
+      display: flex; overflow-x: auto; gap: 10px; padding: 10px;
+      scroll-snap-type: x mandatory;
     }
     .product-slider-wrapper::-webkit-scrollbar { display: none; }
-    .product-slider-wrapper .product-card {
-      scroll-snap-align: start; flex-shrink: 0; min-width: 200px;
-    }
   </style>
 </head>
 <body>
@@ -74,13 +78,7 @@
   </div>
 
   <div class="container">
-    <div class="category-bar">
-      <span onclick="filterByCategory('All')">All</span>
-      <span onclick="filterByCategory('Kitchen')">Kitchen</span>
-      <span onclick="filterByCategory('Beauty')">Beauty</span>
-      <span onclick="filterByCategory('Women')">Women</span>
-      <span onclick="filterByCategory('Electronics')">Electronics</span>
-    </div>
+    <div class="category-bar" id="categoryBar"></div>
 
     <div class="action-icons">
       <div>
@@ -92,8 +90,7 @@
       </div>
     </div>
 
-    <h3 class="mt-4">Featured Products</h3>
-    <div class="product-slider-wrapper" id="featured-products"></div>
+    <div id="sliders"></div>
 
     <h3 class="mt-4">All Products</h3>
     <div class="row" id="product-list"></div>
@@ -117,96 +114,105 @@
   </footer>
 
   <script>
-    let cart = [];
-
-    const products = [
-      { id: 1, name: 'Kitchen Set', price: 299, desc: 'Perfect for modern homes', img: 'https://via.placeholder.com/150', featured: true },
-      { id: 2, name: 'Face Cream', price: 199, desc: 'Organic & natural', img: 'https://via.placeholder.com/150', featured: true },
-      { id: 3, name: 'Handbag', price: 999, desc: 'Trendy & stylish', img: 'https://via.placeholder.com/150' },
-      { id: 4, name: 'LED Bulb', price: 49, desc: 'Energy Efficient', img: 'https://via.placeholder.com/150' }
+    const categories = [
+      'All', 'Women Ethnic', 'Women Western', 'Men', 'Kids', 'Home & Kitchen',
+      'Beauty & Health', 'Jewellery & Accessories', 'Bags & Footwear',
+      'Electronics', 'Sports & Fitness', 'Car & Motorbike',
+      'Office Supplies & Stationery', 'Pet Supplies', 'Food & Drinks', 'Musical Instruments', 'Books'
     ];
 
-    function renderProducts() {
-      const list = document.getElementById('product-list');
-      const featured = document.getElementById('featured-products');
-      list.innerHTML = '';
-      featured.innerHTML = '';
-      products.forEach(p => {
-        const html = `<div class="product-card">
-            <img src="${p.img}" class="img-fluid" alt="${p.name}">
-            <h5>${p.name}</h5>
-            <p>${p.desc}</p>
-            <p><strong>₹${p.price}</strong></p>
-            <button class="btn btn-warning" onclick="addToCart(${p.id})">Add to Cart</button>
-          </div>`;
-        if (p.featured) featured.innerHTML += html;
-        else list.innerHTML += `<div class="col-md-3">${html}</div>`;
+    const products = [
+      { id: 1, name: 'Saree', price: 599, desc: 'Elegant traditional wear', img: 'https://via.placeholder.com/150', category: 'Women Ethnic' },
+      { id: 2, name: 'T-Shirt', price: 399, desc: 'Men fashion', img: 'https://via.placeholder.com/150', category: 'Men' },
+      { id: 3, name: 'Cookware Set', price: 899, desc: 'Kitchen essentials', img: 'https://via.placeholder.com/150', category: 'Home & Kitchen' },
+      { id: 4, name: 'Lipstick', price: 299, desc: 'Beauty item', img: 'https://via.placeholder.com/150', category: 'Beauty & Health' },
+      { id: 5, name: 'Shoes', price: 999, desc: 'Stylish footwear', img: 'https://via.placeholder.com/150', category: 'Bags & Footwear' }
+    ];
+
+    let cart = [];
+
+    function buildCategoryBar() {
+      const bar = document.getElementById('categoryBar');
+      categories.forEach(cat => {
+        const span = document.createElement('span');
+        span.innerText = cat;
+        span.onclick = () => filterByCategory(cat);
+        bar.appendChild(span);
+      });
+    }
+
+    function filterByCategory(category) {
+      const container = document.getElementById('product-list');
+      container.innerHTML = '';
+      products.filter(p => category === 'All' || p.category === category).forEach(p => {
+        container.innerHTML += `<div class="col-md-3"><div class="product-card">
+          <img src="${p.img}" class="img-fluid">
+          <h5>${p.name}</h5>
+          <p>${p.desc}</p>
+          <p><strong>₹${p.price}</strong></p>
+          <button class="btn btn-warning" onclick="addToCart(${p.id})">Add to Cart</button>
+        </div></div>`;
       });
     }
 
     function addToCart(id) {
-      const existing = cart.find(item => item.id === id);
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        const product = products.find(p => p.id === id);
-        cart.push({ ...product, qty: 1 });
+      const existing = cart.find(i => i.id === id);
+      if (existing) existing.qty += 1;
+      else {
+        const item = products.find(p => p.id === id);
+        cart.push({ ...item, qty: 1 });
       }
       updateCartUI();
     }
 
     function updateCartUI() {
-      document.getElementById('cart-count').innerText = cart.reduce((sum, item) => sum + item.qty, 0);
-      const list = document.getElementById('cart-items');
-      list.innerHTML = '';
-      let total = 0;
+      document.getElementById('cart-count').innerText = cart.reduce((a, b) => a + b.qty, 0);
+      let html = '', total = 0;
       cart.forEach((item, i) => {
-        total += item.price * item.qty;
-        list.innerHTML += `<li class="list-group-item d-flex justify-content-between align-items-center">
-          ${item.name} x${item.qty} - ₹${item.price * item.qty}
+        total += item.qty * item.price;
+        html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+          ${item.name} x${item.qty} - ₹${item.qty * item.price}
           <button class="btn btn-sm btn-danger" onclick="removeCartItem(${i})">Remove</button>
         </li>`;
       });
+      document.getElementById('cart-items').innerHTML = html;
       document.getElementById('cart-total').innerText = total;
     }
 
-    function removeCartItem(index) {
-      cart.splice(index, 1);
+    function removeCartItem(i) {
+      cart.splice(i, 1);
       updateCartUI();
     }
 
     function toggleCart() {
-      const section = document.getElementById('cart-section');
-      section.style.display = section.style.display === 'none' ? 'block' : 'none';
+      const el = document.getElementById('cart-section');
+      el.style.display = el.style.display === 'none' ? 'block' : 'none';
     }
 
     function checkoutWhatsapp() {
-      if (cart.length === 0) return alert('Your cart is empty.');
-      let msg = 'Order Details:%0A';
-      let total = 0;
+      if (!cart.length) return alert('Cart is empty!');
+      let msg = 'Order Details:%0A', total = 0;
       cart.forEach(p => {
-        msg += `• ${p.name} x${p.qty} = ₹${p.price * p.qty}%0A`;
-        total += p.price * p.qty;
+        msg += `• ${p.name} x${p.qty} = ₹${p.qty * p.price}%0A`;
+        total += p.qty * p.price;
       });
       msg += `%0ATotal: ₹${total}%0AAddress: [Your Address Here]`;
-      const phone = '9560948662';
-      window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+      window.open(`https://wa.me/9560948662?text=${msg}`, '_blank');
     }
 
     function toggleDarkMode() {
-      document.body.classList.toggle("dark-mode");
+      document.body.classList.toggle('dark-mode');
     }
 
-    document.getElementById('miniTV').addEventListener('click', () => {
-      alert("Coming Soon: JB Mini TV");
-    });
+    document.getElementById('miniTV').onclick = () => alert('Coming Soon: JB Mini TV');
+    document.getElementById('foodDelivery').onclick = () => alert('Coming Soon: JB Food Delivery');
 
-    document.getElementById('foodDelivery').addEventListener('click', () => {
-      alert("Coming Soon: JB Food Delivery");
-    });
-
-    window.onload = renderProducts;
+    window.onload = () => {
+      buildCategoryBar();
+      filterByCategory('All');
+    };
   </script>
 </body>
 </html>
+
 
