@@ -1,4 +1,4 @@
--- Full updated index.html with wishlist, category filter, and dark/light mode toggle -->
+<!-- Full updated index.html with working Add to Cart and WhatsApp Checkout -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,13 +38,11 @@
       background: #232f3e; color: #fff; padding: 6px 12px; border-radius: 20px; cursor: pointer;
     }
     .floating-cart {
-      position: fixed; right: 10px; top: 70px; width: 40px; height: 40px; display: flex;
-      align-items: center; justify-content: center; font-size: 18px; border-radius: 50%;
-      cursor: pointer; z-index: 1000; background-color: #ffa41c; color: #000;
+      position: fixed; right: 10px; top: 70px; font-size: 20px; cursor: pointer; z-index: 1000;
     }
     footer { background-color: #232f3e; padding: 20px; color: #fff; }
     footer a { color: #febd69; }
-    #cart-section { display: none; }
+    #cart-section { display: none; background: #fff; padding: 20px; border: 1px solid #ccc; }
     .action-icons { display: flex; gap: 10px; margin: 15px; justify-content: space-between; align-items: center; }
     .action-icons span {
       background: #fff; border-radius: 50%; padding: 10px; cursor: pointer;
@@ -64,3 +62,149 @@
 <body>
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
+      <a class="navbar-brand" href="#">JB Essential</a>
+      <form class="d-flex ms-auto" role="search">
+        <input id="searchBar" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="button" onclick="filterProducts()">Search</button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="banner">
+    <img src="https://via.placeholder.com/1200x300?text=Welcome+to+JB+Essential" alt="Banner" />
+  </div>
+
+  <div class="container">
+    <div class="category-bar">
+      <span onclick="filterByCategory('All')">All</span>
+      <span onclick="filterByCategory('Kitchen')">Kitchen</span>
+      <span onclick="filterByCategory('Beauty')">Beauty</span>
+      <span onclick="filterByCategory('Women')">Women</span>
+      <span onclick="filterByCategory('Electronics')">Electronics</span>
+    </div>
+
+    <div class="action-icons">
+      <div>
+        <span id="miniTV" title="Mini TV">📺</span>
+        <span id="foodDelivery" title="Food">🍔</span>
+      </div>
+      <div>
+        <button class="btn btn-sm btn-dark" onclick="toggleDarkMode()">Toggle Theme</button>
+      </div>
+    </div>
+
+    <h3 class="mt-4">Featured Products</h3>
+    <div class="product-slider-wrapper" id="featured-products">
+      <!-- Products added by JS -->
+    </div>
+
+    <h3 class="mt-4">All Products</h3>
+    <div class="row" id="product-list">
+      <!-- Products added by JS -->
+    </div>
+
+    <div class="floating-cart" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
+    <div id="cart-section" class="mt-4">
+      <h4>Your Cart</h4>
+      <ul id="cart-items" class="list-group mb-3"></ul>
+      <p><strong>Total: ₹<span id="cart-total">0</span></strong></p>
+      <button class="btn btn-success" onclick="checkoutWhatsapp()">Checkout via WhatsApp</button>
+    </div>
+  </div>
+
+  <footer class="text-center mt-5">
+    <p>&copy; 2025 JB Essential. All rights reserved.</p>
+    <p>
+      <a href="https://instagram.com/jb__essential" target="_blank">Follow us on Instagram</a> |
+      <a href="#">About Us</a> |
+      <a href="#">Contact</a> | Email: contact.jbessential@hgmail.com | Phone: 9560948662
+    </p>
+  </footer>
+
+  <script>
+    let cart = [];
+
+    const products = [
+      { id: 1, name: 'Kitchen Set', price: 299, desc: 'Perfect for modern homes', img: 'https://via.placeholder.com/150', featured: true },
+      { id: 2, name: 'Face Cream', price: 199, desc: 'Organic & natural', img: 'https://via.placeholder.com/150', featured: true },
+      { id: 3, name: 'Handbag', price: 999, desc: 'Trendy & stylish', img: 'https://via.placeholder.com/150' },
+      { id: 4, name: 'LED Bulb', price: 49, desc: 'Energy Efficient', img: 'https://via.placeholder.com/150' }
+    ];
+
+    function renderProducts() {
+      const list = document.getElementById('product-list');
+      const featured = document.getElementById('featured-products');
+      list.innerHTML = '';
+      featured.innerHTML = '';
+      products.forEach(p => {
+        const html = `<div class="product-card">
+            <img src="${p.img}" class="img-fluid" alt="${p.name}">
+            <h5>${p.name}</h5>
+            <p>${p.desc}</p>
+            <p><strong>₹${p.price}</strong></p>
+            <button class="btn btn-warning" onclick="addToCart(${p.id})">Add to Cart</button>
+          </div>`;
+        if (p.featured) featured.innerHTML += html;
+        else list.innerHTML += `<div class="col-md-3">${html}</div>`;
+      });
+    }
+
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      cart.push(product);
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      document.getElementById('cart-count').innerText = cart.length;
+      const list = document.getElementById('cart-items');
+      list.innerHTML = '';
+      let total = 0;
+      cart.forEach((item, i) => {
+        total += item.price;
+        list.innerHTML += `<li class="list-group-item d-flex justify-content-between align-items-center">
+          ${item.name} - ₹${item.price}
+          <button class="btn btn-sm btn-danger" onclick="removeCartItem(${i})">Remove</button>
+        </li>`;
+      });
+      document.getElementById('cart-total').innerText = total;
+    }
+
+    function removeCartItem(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    function toggleCart() {
+      const section = document.getElementById('cart-section');
+      section.style.display = section.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function checkoutWhatsapp() {
+      if (cart.length === 0) return alert('Your cart is empty.');
+      let msg = 'Order Details:%0A';
+      let total = 0;
+      cart.forEach(p => {
+        msg += `• ${p.name} - ₹${p.price}%0A`;
+        total += p.price;
+      });
+      msg += `%0ATotal: ₹${total}%0AAddress: [Your Address Here]`;
+      const phone = '9560948662';
+      window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+    document.getElementById('miniTV').addEventListener('click', () => {
+      alert("Coming Soon: JB Mini TV");
+    });
+    document.getElementById('foodDelivery').addEventListener('click', () => {
+      alert("Coming Soon: JB Food Delivery");
+    });
+
+    window.onload = renderProducts;
+  </script>
+</body>
+</html>
+
