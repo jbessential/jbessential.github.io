@@ -175,6 +175,7 @@
         cart.push({ ...item, qty: 1 });
       }
       updateCartUI();
+      localStorage.setItem("jb_cart", JSON.stringify(cart));
     }
 
     function updateCartUI() {
@@ -194,6 +195,7 @@
     function removeCartItem(i) {
       cart.splice(i, 1);
       updateCartUI();
+      localStorage.setItem("jb_cart", JSON.stringify(cart));
     }
 
     function toggleCart() {
@@ -209,10 +211,13 @@
     document.getElementById('foodDelivery').onclick = () => alert('Coming Soon: JB Food Delivery');
 
     window.onload = () => {
+      cart = JSON.parse(localStorage.getItem("jb_cart")) || [];
       buildCategoryBar();
       filterByCategory('All');
+      updateCartUI();
     };
   </script>
 </body>
 </html>
+
 
