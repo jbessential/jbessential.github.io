@@ -100,7 +100,7 @@
       <h4>Your Cart</h4>
       <ul id="cart-items" class="list-group mb-3"></ul>
       <p><strong>Total: ₹<span id="cart-total">0</span></strong></p>
-      <button class="btn btn-success" onclick="checkoutWhatsapp()">Checkout via WhatsApp</button>
+      <a href="admin.html" class="btn btn-success">Custom Checkout</a>
     </div>
   </div>
 
@@ -189,17 +189,6 @@
       el.style.display = el.style.display === 'none' ? 'block' : 'none';
     }
 
-    function checkoutWhatsapp() {
-      if (!cart.length) return alert('Cart is empty!');
-      let msg = 'Order Details:%0A', total = 0;
-      cart.forEach(p => {
-        msg += `• ${p.name} x${p.qty} = ₹${p.qty * p.price}%0A`;
-        total += p.qty * p.price;
-      });
-      msg += `%0ATotal: ₹${total}%0AAddress: [Your Address Here]`;
-      window.open(`https://wa.me/9560948662?text=${msg}`, '_blank');
-    }
-
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
     }
@@ -214,3 +203,4 @@
   </script>
 </body>
 </html>
+
