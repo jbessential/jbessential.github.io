@@ -1,4 +1,4 @@
-<!-- Full frontend + admin panel UI with custom login credentials -->
+<!-- Admin panel HTML only (separate from main website) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -109,7 +109,7 @@
       <p>All orders placed will be shown here (in future with Firebase).</p>
 
       <h2 id="customers">👥 Customer Management</h2>
-      <p>View customer data (future feature).</p>
+      <p>Coming soon.</p>
 
       <h2 id="categories">🗃️ Category Management</h2>
       <form class="mb-4">
@@ -120,28 +120,31 @@
       <h2 id="settings">⚙️ Store Settings</h2>
       <form>
         <input class="form-control mb-2" type="text" placeholder="Store Name" value="JB Essential">
-        <input class="form-control mb-2" type="text" placeholder="WhatsApp Number" value="9560948662">
+        <input class="form-control mb-2" type="text" placeholder="Support Email" value="contact.jbessential@gmail.com">
+        <input class="form-control mb-2" type="text" placeholder="Phone" value="9560948662">
         <button class="btn btn-secondary">Update Settings</button>
       </form>
     </div>
   </div>
 
   <script>
-    window.addEventListener('DOMContentLoaded', function () {
-      const loginButton = document.getElementById('login-button');
-      loginButton.addEventListener('click', function loginAdmin() {
-        const username = document.getElementById('admin-username').value;
-        const password = document.getElementById('admin-password').value;
-        const error = document.getElementById('login-error');
+    function loginAdmin() {
+      const username = document.getElementById('admin-username').value;
+      const password = document.getElementById('admin-password').value;
+      const error = document.getElementById('login-error');
 
-        if (username === 'adminpanel786' && password === 'jbessntialadminpanel786') {
-          document.getElementById('login-section').style.display = 'none';
-          document.getElementById('admin-panel').style.display = 'block';
-        } else {
-          error.classList.remove('d-none');
-        }
-      });
+      if (username === 'adminpanel786' && password === 'jbessentialadminpanel786') {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('admin-panel').style.display = 'block';
+      } else {
+        error.classList.remove('d-none');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('login-button').addEventListener('click', loginAdmin);
     });
   </script>
 </body>
 </html>
+
