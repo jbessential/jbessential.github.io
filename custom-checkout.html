@@ -1,7 +1,5 @@
-<!-- custom-checkout.html -->
 <!DOCTYPE html>
-<html lan
-g="en">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,20 +12,10 @@ g="en">
       background-color: #f8f9fa;
       font-family: Arial, sans-serif;
     }
-    .container {
-      margin-top: 50px;
-    }
-    .card {
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    .btn-primary {
-      background-color: #232f3e;
-      border: none;
-    }
-    .btn-primary:hover {
-      background-color: #febd69;
-      color: #000;
-    }
+    .container { margin-top: 50px; }
+    .card { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .btn-primary { background-color: #232f3e; border: none; }
+    .btn-primary:hover { background-color: #febd69; color: #000; }
   </style>
 </head>
 <body>
@@ -49,7 +37,7 @@ g="en">
             <input type="tel" class="form-control" id="phone" required>
           </div>
           <div class="mb-3">
-            <label for="items" class="form-label">Order Summary</label>
+            <label class="form-label">Order Summary</label>
             <ul id="items" class="list-group mb-2"></ul>
             <p><strong>Total: ₹<span id="total">0</span></strong></p>
           </div>
@@ -87,32 +75,31 @@ g="en">
       itemList.appendChild(li);
       total += item.qty * item.price;
     });
+
     totalSpan.innerText = total;
 
     document.getElementById("checkoutForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
-      const orderData = {
+      const order = {
         name: document.getElementById("name").value,
         address: document.getElementById("address").value,
         phone: document.getElementById("phone").value,
-        cart: cart,
+        items: cart,
         total: total,
         timestamp: new Date().toISOString()
       };
 
-      db.ref("orders").push(orderData)
-        .then(() => {
+      db.ref("orders").push(order, err => {
+        if (err) {
+          alert("Order failed to save.");
+        } else {
           alert("Order placed successfully!");
           localStorage.removeItem("jb_cart");
           window.location.href = "index.html";
-        })
-        .catch(err => {
-          console.error("Error placing order:", err);
-          alert("Failed to place order. Please try again.");
-        });
+        }
+      });
     });
   </script>
 </body>
 </html>
-
