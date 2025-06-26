@@ -1,117 +1,232 @@
- <!-- index.html - JB Essential Final Working Version --><!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JB Essential - Home</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>JB Essential Store</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #f3f3f3;
+      --text-color: #000;
+      --card-bg: #fff;
+    }
+    body.dark-mode {
+      --bg-color: #1e1e1e;
+      --text-color: #fff;
+      --card-bg: #2a2a2a;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+    .navbar { background-color: #232f3e !important; }
+    .navbar-brand, .nav-link, .btn-outline-success { color: #fff !important; }
+    .btn-outline-success:hover { background-color: #febd69; color: #111 !important; }
+    .product-card {
+      background-color: var(--card-bg); border: 1px solid #ddd; border-radius: 10px; padding: 10px;
+      text-align: center; margin: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      flex: 0 0 auto;
+    }
+    .banner img { width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; }
+    .category-bar {
+      display: flex; gap: 10px; overflow-x: auto;
+      background: var(--card-bg); padding: 10px; margin-top: 15px; border-radius: 8px;
+      scroll-snap-type: x mandatory;
+    }
+    .category-bar span {
+      background: #232f3e; color: #fff; padding: 6px 12px; border-radius: 20px; cursor: pointer; white-space: nowrap;
+      scroll-snap-align: start;
+    }
+    .floating-cart {
+      position: fixed; right: 10px; top: 70px; font-size: 20px; cursor: pointer; z-index: 1000;
+    }
+    footer { background-color: #232f3e; padding: 20px; color: #fff; }
+    footer a { color: #febd69; }
+    #cart-section { display: none; background: #fff; padding: 20px; border: 1px solid #ccc; }
+    .action-icons { display: flex; gap: 10px; margin: 15px; justify-content: space-between; align-items: center; }
+    .action-icons span {
+      background: #fff; border-radius: 50%; padding: 10px; cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .slider-section { margin-bottom: 30px; }
+    .slider-section h4 { margin: 20px 0 10px 10px; }
+    .product-slider-wrapper {
+      display: flex; overflow-x: auto; gap: 10px; padding: 10px;
+      scroll-snap-type: x mandatory;
+    }
+    .product-slider-wrapper::-webkit-scrollbar { display: none; }
+  </style>
+
+  <!-- ✅ Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBlnTXaiylzMn67Z4tKc46LwDLArlEBcnE",
+      authDomain: "jbessential-def67.firebaseapp.com",
+      projectId: "jbessential-def67",
+      storageBucket: "jbessential-def67.appspot.com",
+      messagingSenderId: "380875888035",
+      appId: "1:380875888035:web:cf9b2e99b9a0b727533616",
+      databaseURL: "https://jbessential-def67-default-rtdb.firebaseio.com"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+  </script>
 </head>
 <body>
-  <header>
-    <h1>JB Essential</h1>
-    <input type="text" id="search" placeholder="Search products..." />
-    <button onclick="toggleDarkMode()">🌙</button>
-    <button onclick="showCart()">🛒 (<span id="cart-count">0</span>)</button>
-  </header>  <main>
-    <section id="products"></section>
-  </main>  <div id="cart" style="display:none">
-    <h2>Your Cart</h2>
-    <ul id="cart-items"></ul>
-    <p>Total: ₹<span id="cart-total">0</span></p>
-    <button onclick="showCheckout()">Checkout</button>
-  </div>  <div id="checkout" style="display:none">
-    <h2>Checkout</h2>
-    <input type="text" id="cust-name" placeholder="Your Name" required />
-    <input type="text" id="cust-mobile" placeholder="Mobile Number" required />
-    <textarea id="cust-address" placeholder="Address" required></textarea>
-    <button onclick="placeOrder()">Place Order</button>
-  </div>  <footer>
-    <p>&copy; JB Essential | <a href="https://instagram.com/jb__essential">Instagram</a></p>
-  </footer><script>
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "jbessential-def67.firebaseapp.com",
-    databaseURL: "https://jbessential-def67-default-rtdb.firebaseio.com",
-    projectId: "jbessential-def67",
-    storageBucket: "jbessential-def67.appspot.com",
-    messagingSenderId: "YOUR_MSG_ID",
-    appId: "YOUR_APP_ID"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-  const storage = firebase.storage();
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">JB Essential</a>
+      <form class="d-flex ms-auto" role="search">
+        <input id="searchBar" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="button" onclick="filterProducts()">Search</button>
+      </form>
+    </div>
+  </nav>
 
-  let cart = [];
+  <div class="banner">
+    <img src="https://via.placeholder.com/1200x300?text=Welcome+to+JB+Essential" alt="Banner" />
+  </div>
 
-  function loadProducts() {
-    db.ref('products').on('value', snapshot => {
-      const products = snapshot.val();
-      const productsEl = document.getElementById('products');
-      productsEl.innerHTML = '';
-      for (let id in products) {
-        const p = products[id];
-        productsEl.innerHTML += `
-          <div class="product">
-            <img src="${p.image}" alt="${p.name}" />
-            <h3>${p.name}</h3>
-            <p>${p.description}</p>
-            <p>₹${p.price}</p>
-            <button onclick="addToCart('${id}', '${p.name}', ${p.price})">Add to Cart</button>
-          </div>
-        `;
-      }
-    });
-  }
+  <div class="container">
+    <div class="category-bar" id="categoryBar"></div>
 
-  function addToCart(id, name, price) {
-    cart.push({ id, name, price });
-    updateCart();
-  }
+    <div class="action-icons">
+      <div>
+        <span id="miniTV" title="Mini TV">📺</span>
+        <span id="foodDelivery" title="Food">🍔</span>
+      </div>
+      <div>
+        <button class="btn btn-sm btn-dark" onclick="toggleDarkMode()">Toggle Theme</button>
+      </div>
+    </div>
 
-  function updateCart() {
-    document.getElementById('cart-count').innerText = cart.length;
-    const itemsEl = document.getElementById('cart-items');
-    const totalEl = document.getElementById('cart-total');
-    itemsEl.innerHTML = '';
-    let total = 0;
-    cart.forEach(item => {
-      itemsEl.innerHTML += `<li>${item.name} - ₹${item.price}</li>`;
-      total += item.price;
-    });
-    totalEl.innerText = total;
-  }
+    <div id="sliders"></div>
 
-  function showCart() {
-    document.getElementById('cart').style.display = 'block';
-    document.getElementById('checkout').style.display = 'none';
-  }
+    <h3 class="mt-4">All Products</h3>
+    <div class="row" id="product-list"></div>
 
-  function showCheckout() {
-    document.getElementById('checkout').style.display = 'block';
-  }
+    <div class="floating-cart" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
+    <div id="cart-section" class="mt-4">
+      <h4>Your Cart</h4>
+      <ul id="cart-items" class="list-group mb-3"></ul>
+      <p><strong>Total: ₹<span id="cart-total">0</span></strong></p>
+      <a id="whatsapp-checkout" class="btn btn-success" target="_blank" onclick="checkoutWhatsapp()">Checkout via WhatsApp</a>
+    </div>
+  </div>
 
-  function placeOrder() {
-    const name = document.getElementById('cust-name').value;
-    const mobile = document.getElementById('cust-mobile').value;
-    const address = document.getElementById('cust-address').value;
-    if (!name || !mobile || !address || cart.length === 0) {
-      alert('Please fill all details and add products.');
-      return;
+  <footer class="text-center mt-5">
+    <p>&copy; 2025 JB Essential. All rights reserved.</p>
+    <p>
+      <a href="https://instagram.com/jb__essential" target="_blank">Follow us on Instagram</a> |
+      <a href="#">About Us</a> |
+      <a href="#">Contact</a> | Email :contact.jbessential@gmail.com | Phone: 9560948662
+    </p>
+  </footer>
+
+  <script>
+    const categories = [
+      'All', 'Women Ethnic', 'Women Western', 'Men', 'Kids', 'Home & Kitchen',
+      'Beauty & Health', 'Jewellery & Accessories', 'Bags & Footwear',
+      'Electronics', 'Sports & Fitness', 'Car & Motorbike',
+      'Office Supplies & Stationery', 'Pet Supplies', 'Musical Instruments', 'Books'
+    ];
+
+    let products = [];
+    let cart = [];
+
+    function buildCategoryBar() {
+      const bar = document.getElementById('categoryBar');
+      categories.forEach(cat => {
+        const span = document.createElement('span');
+        span.innerText = cat;
+        span.onclick = () => filterByCategory(cat);
+        bar.appendChild(span);
+      });
     }
-    const order = { name, mobile, address, items: cart, total: cart.reduce((sum, i) => sum + i.price, 0), time: Date.now() };
-    db.ref('orders').push(order);
-    alert('Order placed successfully!');
-    cart = [];
-    updateCart();
-    document.getElementById('checkout').style.display = 'none';
-  }
 
-  function toggleDarkMode() {
-    document.body.classList.toggle('dark');
-  }
+    function filterByCategory(category) {
+      const container = document.getElementById('product-list');
+      container.innerHTML = '';
+      products.filter(p => category === 'All' || p.category === category).forEach(p => {
+        container.innerHTML += `<div class="col-md-3"><div class="product-card">
+          <img src="${p.img}" class="img-fluid">
+          <h5>${p.name}</h5>
+          <p>${p.desc}</p>
+          <p><strong>₹${p.price}</strong></p>
+          <button class="btn btn-warning" onclick="addToCart('${p.id}')">Add to Cart</button>
+        </div></div>`;
+      });
+    }
 
-  loadProducts();
-</script></body>
-</html><!-- admin.html ready code agle message mein bhejta hoon -->         
+    function fetchProducts() {
+      db.ref("products").on("value", (snapshot) => {
+        const data = snapshot.val();
+        products = data ? Object.values(data) : [];
+        filterByCategory("All");
+      });
+    }
+
+    function addToCart(id) {
+      const existing = cart.find(i => i.id === id);
+      if (existing) existing.qty += 1;
+      else {
+        const item = products.find(p => p.id === id);
+        cart.push({ ...item, qty: 1 });
+      }
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      document.getElementById('cart-count').innerText = cart.reduce((a, b) => a + b.qty, 0);
+      let html = '', total = 0;
+      cart.forEach((item, i) => {
+        total += item.qty * item.price;
+        html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+          ${item.name} x${item.qty} - ₹${item.qty * item.price}
+          <button class="btn btn-sm btn-danger" onclick="removeCartItem(${i})">Remove</button>
+        </li>`;
+      });
+      document.getElementById('cart-items').innerHTML = html;
+      document.getElementById('cart-total').innerText = total;
+    }
+
+    function removeCartItem(i) {
+      cart.splice(i, 1);
+      updateCartUI();
+    }
+
+    function toggleCart() {
+      const el = document.getElementById('cart-section');
+      el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function checkoutWhatsapp() {
+      if (!cart.length) return alert('Cart is empty!');
+      let msg = 'Order Details:%0A', total = 0;
+      cart.forEach(p => {
+        msg += `• ${p.name} x${p.qty} = ₹${p.qty * p.price}%0A`;
+        total += p.qty * p.price;
+      });
+      msg += `%0ATotal: ₹${total}%0AAddress: [Your Address Here]`;
+      const url = `https://wa.me/9560948662?text=${msg}`;
+      document.getElementById('whatsapp-checkout').href = url;
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    document.getElementById('miniTV').onclick = () => alert('Coming Soon: JB Mini TV');
+    document.getElementById('foodDelivery').onclick = () => alert('Coming Soon: JB Food Delivery');
+
+    window.onload = () => {
+      buildCategoryBar();
+      fetchProducts();
+    };
+  </script>
+</body>
+</html>
