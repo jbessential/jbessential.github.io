@@ -129,10 +129,13 @@
 
   <script>
     const categories = [
-      'All', 'Women Ethnic', 'Women Western', 'Men', 'Kids', 'Home & Kitchen',
-      'Beauty & Health', 'Jewellery & Accessories', 'Bags & Footwear',
-      'Electronics', 'Sports & Fitness', 'Car & Motorbike',
-      'Office Supplies & Stationery', 'Pet Supplies', 'Musical Instruments', 'Books'
+      'All',
+      'Women Ethnic',
+      'Women Western',
+      'Men',
+      'Kids',
+      'Jewellery & Accessories',
+      'Bags & Footwear'
     ];
 
     let products = [];
@@ -140,6 +143,7 @@
 
     function buildCategoryBar() {
       const bar = document.getElementById('categoryBar');
+      bar.innerHTML = '';
       categories.forEach(cat => {
         const span = document.createElement('span');
         span.innerText = cat;
