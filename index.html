@@ -1,3 +1,4 @@
+<!-- Full HTML with dummy product inserted for testing -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +28,7 @@
     .product-card {
       background-color: var(--card-bg); border: 1px solid #ddd; border-radius: 10px; padding: 10px;
       text-align: center; margin: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      flex: 0 0 auto;
+      flex: 0 0 auto; cursor: pointer;
     }
     .banner img { width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; }
     .category-bar {
@@ -57,24 +58,9 @@
       scroll-snap-type: x mandatory;
     }
     .product-slider-wrapper::-webkit-scrollbar { display: none; }
+    .modal-img { max-width: 100%; max-height: 300px; }
   </style>
-
-  <!-- ✅ Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBlnTXaiylzMn67Z4tKc46LwDLArlEBcnE",
-      authDomain: "jbessential-def67.firebaseapp.com",
-      projectId: "jbessential-def67",
-      storageBucket: "jbessential-def67.appspot.com",
-      messagingSenderId: "380875888035",
-      appId: "1:380875888035:web:cf9b2e99b9a0b727533616",
-      databaseURL: "https://jbessential-def67-default-rtdb.firebaseio.com"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg">
@@ -87,9 +73,8 @@
     </div>
   </nav>
 
-  <!-- ✅ Updated banner image using online source -->
   <div class="banner">
-    <img src="https://raw.githubusercontent.com/ayushsoni101/jbessential-assets/main/banner-men.png" alt="Men Collection Banner" />
+    <img src="https://raw.githubusercontent.com/jbessential/jbessential.github.io/main/banner-men.png" alt="Men Collection Banner" />
   </div>
 
   <div class="container">
@@ -105,8 +90,6 @@
       </div>
     </div>
 
-    <div id="sliders"></div>
-
     <h3 class="mt-4">All Products</h3>
     <div class="row" id="product-list"></div>
 
@@ -116,6 +99,25 @@
       <ul id="cart-items" class="list-group mb-3"></ul>
       <p><strong>Total: ₹<span id="cart-total">0</span></strong></p>
       <a id="whatsapp-checkout" class="btn btn-success" target="_blank" onclick="checkoutWhatsapp()">Checkout via WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- Product Details Modal -->
+  <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="productModalLabel">Product Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img id="modal-img" class="modal-img mb-3" src="" alt="Product Image">
+          <h5 id="modal-name"></h5>
+          <p id="modal-desc"></p>
+          <p><strong>₹<span id="modal-price"></span></strong></p>
+          <button class="btn btn-warning" id="modal-add-btn">Add to Cart</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -129,20 +131,17 @@
   </footer>
 
   <script>
-    const categories = [
-      'All',
-      'Women Ethnic',
-      'Women Western',
-      'Men',
-      'Kids',
-      'Jewellery',
-      'Accessories',
-      'Bags',
-      'Footwear',
-      'Watches'
+    const categories = ['All'];
+    let products = [
+      {
+        id: 'dummy1',
+        name: 'Stylish T-Shirt',
+        desc: 'High-quality cotton T-shirt for men.',
+        price: 499,
+        category: 'All',
+        img: 'https://via.placeholder.com/300x300.png?text=Stylish+T-Shirt'
+      }
     ];
-
-    let products = [];
     let cart = [];
 
     function buildCategoryBar() {
@@ -160,22 +159,24 @@
       const container = document.getElementById('product-list');
       container.innerHTML = '';
       products.filter(p => category === 'All' || p.category === category).forEach(p => {
-        container.innerHTML += `<div class="col-md-3"><div class="product-card">
+        container.innerHTML += `<div class="col-md-3"><div class="product-card" onclick="showProductDetails('${p.id}')">
           <img src="${p.img}" class="img-fluid">
           <h5>${p.name}</h5>
           <p>${p.desc}</p>
           <p><strong>₹${p.price}</strong></p>
-          <button class="btn btn-warning" onclick="addToCart('${p.id}')">Add to Cart</button>
         </div></div>`;
       });
     }
 
-    function fetchProducts() {
-      db.ref("products").on("value", (snapshot) => {
-        const data = snapshot.val();
-        products = data ? Object.values(data) : [];
-        filterByCategory("All");
-      });
+    function showProductDetails(id) {
+      const item = products.find(p => p.id === id);
+      document.getElementById('modal-img').src = item.img;
+      document.getElementById('modal-name').innerText = item.name;
+      document.getElementById('modal-desc').innerText = item.desc;
+      document.getElementById('modal-price').innerText = item.price;
+      document.getElementById('modal-add-btn').onclick = () => addToCart(item.id);
+      const modal = new bootstrap.Modal(document.getElementById('productModal'));
+      modal.show();
     }
 
     function addToCart(id) {
@@ -233,8 +234,9 @@
 
     window.onload = () => {
       buildCategoryBar();
-      fetchProducts();
+      filterByCategory('All');
     };
   </script>
 </body>
 </html>
+
